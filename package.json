@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Software-Projekt-2022/Umwelt/issues"
   },
-  "homepage": "https://github.com/Software-Projekt-2022/Umwelt#readme"
+  "homepage": "https://github.com/Software-Projekt-2022/Umwelt#readme",
+  "dependencies": {
+    "express": "^4.18.0"
+  }
 }
