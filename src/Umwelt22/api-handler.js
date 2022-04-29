@@ -1,3 +1,4 @@
+
 let weather = {
     int: displayTime = 0,
     json: currentWeather=null,
@@ -5,7 +6,7 @@ let weather = {
     json: currentRiver=null,
     "apiKey": "60918bc5fea5594f5317de56f954851c",
     fetchWeather: function() {
-        
+
         fetch(
             "https://api.openweathermap.org/data/2.5/onecall?lat=52.28953&lon=8.91455&exclude=minutely,daily&appid="+this.apiKey+"&units=metric&lang=de"
         )
@@ -20,30 +21,30 @@ let weather = {
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
             var time=date.toLocaleString("de-DE", {timeZoneName: "short"})
-            document.querySelector(".Datum").innerText = "Am " + time.slice(0,9);
-            document.querySelector(".DT").innerText = "Um " + time.slice(10, 19) +" Uhr";
-            document.querySelector(".Temperatur").innerText ="Temperatur: " + temp + " °C";
-            document.querySelector(".Gefühl").innerText = "Gefühlt: " + feels_like + " °C";
-            document.querySelector(".Icon").src = "https://openweathermap.org/img/wn/" + icon +".png";
-            document.querySelector(".Beschreibung").innerText = description;
-            document.querySelector(".UVI").innerText = "UV Index: "+ uvi;
-            document.querySelector(".Luftfeuchtigkeit").innerText = "Luftfeuchtigkeit: " + humidity + "%";
-            document.querySelector(".Wind").innerText = "Windgeschwindigkeit: " + wind_speed + "kmh";
+            document.querySelector(".date").innerText = "Am " + time.slice(0,9);
+            document.querySelector(".dt").innerText = "Um " + time.slice(10, 19) +" Uhr";
+            document.querySelector(".temperatur").innerText ="Temperatur: " + temp + " °C";
+            document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like + " °C";
+            document.querySelector(".icon").src = "https://openweathermap.org/img/wn/" + icon +".png";
+            document.querySelector(".description").innerText = description;
+            document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
+            document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
+            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed + "kmh";
         }else{
             var {icon, description} = data.current.weather[0];
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.current;
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
             var time=date.toLocaleString("de-DE", {timeZoneName: "short"})
-            document.querySelector(".Datum").innerText = "Am " + time.slice(0,9);
-            document.querySelector(".DT").innerText = "Um " + time.slice(10, 19) +" Uhr";
-            document.querySelector(".Temperatur").innerText ="Temperatur: " + temp + " °C";
-            document.querySelector(".Gefühl").innerText = "Gefühlt: " + feels_like + " °C";
-            document.querySelector(".Icon").src = "https://openweathermap.org/img/wn/" + icon +".png";
-            document.querySelector(".Beschreibung").innerText = description;
-            document.querySelector(".UVI").innerText = "UV Index: "+ uvi;
-            document.querySelector(".Luftfeuchtigkeit").innerText = "Luftfeuchtigkeit: " + humidity + "%";
-            document.querySelector(".Wind").innerText = "Windgeschwindigkeit: " + wind_speed + "kmh";
+            document.querySelector(".date").innerText = "Am " + time.slice(0,9);
+            document.querySelector(".dt").innerText = "Um " + time.slice(10, 19) +" Uhr";
+            document.querySelector(".temperatur").innerText ="Temperatur: " + temp + " °C";
+            document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like + " °C";
+            document.querySelector(".icon").src = "https://openweathermap.org/img/wn/" + icon +".png";
+            document.querySelector(".description").innerText = description;
+            document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
+            document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
+            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed + "kmh";
         }
     },
     previous: function() {
@@ -62,16 +63,6 @@ let weather = {
     }
 };
 
-
-document.getElementById("previous").addEventListener("click", function(){
-    console.log("previous");
-    weather.previous();
-});
-
-document.getElementById("next").addEventListener("click",function(){
-    weather.next();
-});
-
 let pollen = {
 
     fetchPollen: function(){
@@ -84,6 +75,7 @@ let pollen = {
     displayPollen: function(data){
         var Pollen = [];
         Pollen = data.pollen;
+        console.log(Pollen)
         document.querySelector(".Ambrosia").innerText="Ambrosia: "+Pollen[0].today.description;
         document.querySelector(".Beifuss").innerText="Beifuss: "+Pollen[1].today.description;
         document.querySelector(".Birke").innerText="Birke: "+Pollen[2].today.description;
@@ -99,6 +91,13 @@ let River= {
     
 }
 
+document.getElementById("previous").addEventListener("click", function(){
+    console.log("previous");
+    weather.previous();
+});
 
+document.getElementById("next").addEventListener("click",function(){
+    weather.next();
+});
 weather.fetchWeather();
 pollen.fetchPollen();
