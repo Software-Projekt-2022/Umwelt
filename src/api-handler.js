@@ -1,6 +1,7 @@
 
 let weather = {
     int: displayTime = 0,
+    int: pollenDay=0,
     json: currentWeather=null,
     json: currentPollen=null,
     json: currentRiver=null,
@@ -76,14 +77,42 @@ let pollen = {
         var Pollen = [];
         Pollen = data.pollen;
         console.log(Pollen)
-        document.querySelector(".Ambrosia").innerText="Ambrosia: "+Pollen[0].today.description;
-        document.querySelector(".Beifuss").innerText="Beifuss: "+Pollen[1].today.description;
-        document.querySelector(".Birke").innerText="Birke: "+Pollen[2].today.description;
-        document.querySelector(".Erle").innerText="Erle: "+Pollen[3].today.description;
-        document.querySelector(".Esche").innerText="Esche: "+Pollen[4].today.description;
-        document.querySelector(".Gräser").innerText="Gräser: "+Pollen[5].today.description;
-        document.querySelector(".Hasel").innerText="Hasel: "+Pollen[6].today.description;
-        document.querySelector(".Roggen").innerText="Roggen: "+Pollen[7].today.description;
+        if(pollenDay==0){
+            document.querySelector(".Day").innerText="Heute";
+            document.querySelector(".Ambrosia").innerText="Ambrosia: "+Pollen[0].today.description;
+            document.querySelector(".Beifuss").innerText="Beifuss: "+Pollen[1].today.description;
+            document.querySelector(".Birke").innerText="Birke: "+Pollen[2].today.description;
+            document.querySelector(".Erle").innerText="Erle: "+Pollen[3].today.description;
+            document.querySelector(".Esche").innerText="Esche: "+Pollen[4].today.description;
+            document.querySelector(".Gräser").innerText="Gräser: "+Pollen[5].today.description;
+            document.querySelector(".Hasel").innerText="Hasel: "+Pollen[6].today.description;
+            document.querySelector(".Roggen").innerText="Roggen: "+Pollen[7].today.description;
+        }
+        if(pollenDay==1){
+            document.querySelector(".Day").innerText="Morgen";
+            document.querySelector(".Ambrosia").innerText="Ambrosia: "+Pollen[0].tomorrow.description;
+            document.querySelector(".Beifuss").innerText="Beifuss: "+Pollen[1].tomorrow.description;
+            document.querySelector(".Birke").innerText="Birke: "+Pollen[2].tomorrow.description;
+            document.querySelector(".Erle").innerText="Erle: "+Pollen[3].tomorrow.description;
+            document.querySelector(".Esche").innerText="Esche: "+Pollen[4].tomorrow.description;
+            document.querySelector(".Gräser").innerText="Gräser: "+Pollen[5].tomorrow.description;
+            document.querySelector(".Hasel").innerText="Hasel: "+Pollen[6].tomorrow.description;
+            document.querySelector(".Roggen").innerText="Roggen: "+Pollen[7].tomorrow.description;
+        }
+    },
+
+    nextPollen: function() {
+        if(pollenDay<3){
+            pollenDay++;
+        }
+        pollen.fetchPollen(currentPollen)
+    },
+
+    previousPollen: function() {
+        if(pollenDay>0){
+            pollenDay--;
+        }
+        pollen.fetchPollen(currentPollen)
     }
 }
 
@@ -99,5 +128,14 @@ document.getElementById("previous").addEventListener("click", function(){
 document.getElementById("next").addEventListener("click",function(){
     weather.next();
 });
+
+document.getElementById("previousPollen").addEventListener("click", function(){
+    pollen.previousPollen();
+});
+
+document.getElementById("nextPollen").addEventListener("click",function(){
+    pollen.nextPollen();
+});
+
 weather.fetchWeather();
 pollen.fetchPollen();
