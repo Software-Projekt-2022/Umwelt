@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Wetter in CyberCity</title>
+    <link rel="stylesheet" href=".style.css">
+    <script src="./api-handler.js" defer></script>
+</head>
+<body>
+    <div class="card">
+        <div class="Wetter">
+            <h2 class="Stadt">Wetter in CyberCity</h2>
+            <div class="date">Am 24.04.2022</div>
+            <div class="dt">Um 00:00 Uhr</div>
+            <div class="temperatur">Temperatur: 18 °C</div>
+            <div class="feels_like">Gefühlt: 16 °C</div>
+            <img src="" alt="" class="icon"/>
+            <div class="description">Bewölkt</div>
+            <div class="uvi">UV index: </div>
+            <div class="humidity">Luftfeuchtigkeit: 45%</div>    
+            <div class="wind">Windgeschwindigkeit: 7 Kmh</div>
+            <button id = "previous" onclick="console.log('Previous')">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+            </button>
+            <button id = "next" >
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+            </button>
+        </div>
+    </div>
+    <div class = "card">
+        <div class = "Pollen">
+            <h2 class="Pollen">Pollenflug in CyberCity</h2>
+            <div class = "Ambrosia">Ambrosia: _   _   _</div>
+            <div class = "Beifuss">Beifuss: _   _   _</div>
+            <div class = "Birke">Birke: _   _   _</div>
+            <div class = "Erle">Erle: _   _   _</div>
+            <div class = "Esche">Esche: _   _   _</div>
+            <div class = "Gräser">Gräser: _   _   _</div>
+            <div class = "Hasel">Hasel: _   _   _</div>
+            <div class = "Roggen">Roggen: _   _   _</div>
+        </div>
+    </div>
+</body>
+</html>
