@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Software-Projekt-2022/Umwelt#readme",
   "dependencies": {
-    "express": "^4.18.0"
+    "express": "^4.18.0",
+    "express.js": "^1.0.0"
   }
 }
