@@ -9,21 +9,21 @@
 </head>
 <body>
     <div class="card">
-        <div class="Wetter">
-            <h2 class="Stadt">Wetter in CyberCity</h2>
+        <div class="weather">
+            <h2 class="city">Wetter in CyberCity</h2>
             <div class="date">Am 24.04.2022</div>
             <div class="dt">Um 00:00 Uhr</div>
-            <div class="temperatur">Temperatur: 18 °C</div>
+            <div class="temperatur">Temperatur: 0 °C</div>
             <div class="feels_like">Gefühlt: 16 °C</div>
             <img src="" alt="" class="icon"/>
             <div class="description">Bewölkt</div>
             <div class="uvi">UV index: </div>
             <div class="humidity">Luftfeuchtigkeit: 45%</div>    
             <div class="wind">Windgeschwindigkeit: 7 Kmh</div>
-            <button id = "previous" onclick="console.log('Previous')">
+            <button id = "previous">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
             </button>
-            <button id = "next" >
+            <button id = "next">
                 <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
             </button>
         </div>
@@ -31,6 +31,7 @@
     <div class = "card">
         <div class = "Pollen">
             <h2 class="Pollen">Pollenflug in CyberCity</h2>
+            <div class = "Day">Tag</div>
             <div class = "Ambrosia">Ambrosia: _   _   _</div>
             <div class = "Beifuss">Beifuss: _   _   _</div>
             <div class = "Birke">Birke: _   _   _</div>
@@ -39,6 +40,21 @@
             <div class = "Gräser">Gräser: _   _   _</div>
             <div class = "Hasel">Hasel: _   _   _</div>
             <div class = "Roggen">Roggen: _   _   _</div>
+            <button id = "previousPollen">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+            </button>
+            <button id = "nextPollen">
+                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+            </button>
+        </div>
+    </div>
+    <div class = "card">
+        <div class = "River">
+            <h2 class="River">Wasserstand der Meser in CyberCity</h2>
+            <div class= "water_level">Aktueller Wasserstand: x m, Trend: ++</div>
+            <div class= "last_hours">11:00:, 9:00: , 7:00: </div>
+            <div class= "last_days"> Mi: , Di: , Mo: , So: , Sa: </div>
+            <div class = "last_weeks">Vor einer Woche: cm  |  Vor zwei Wochen: cm </div>
         </div>
     </div>
 </body>
