@@ -8,53 +8,110 @@
     <script src="./api-handler.js" defer></script>
 </head>
 <body>
-    <div class="card">
-        <div class="weather">
-            <h2 class="city">Wetter in CyberCity</h2>
-            <div class="date">Am 24.04.2022</div>
-            <div class="dt">Um 00:00 Uhr</div>
-            <div class="temperatur">Temperatur: 0 °C</div>
-            <div class="feels_like">Gefühlt: 16 °C</div>
-            <img src="" alt="" class="icon"/>
-            <div class="description">Bewölkt</div>
-            <div class="uvi">UV index: </div>
-            <div class="humidity">Luftfeuchtigkeit: 45%</div>    
-            <div class="wind">Windgeschwindigkeit: 7 Kmh</div>
-            <button id = "previous">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
-            </button>
-            <button id = "next">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
-            </button>
+    <div class = "element">
+        <h2>Wetter in CyberCity</h2>
+        <div class="now">
+            <div class="buttonLeft">
+                <button id = "previous">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="12em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+                </button>
+            </div>
+            <div class = "weatherNow">
+                <div class="date">Am 24.04.2022</div>
+                <div class="temperaturNow">Temperatur: 0°C</div>
+                <img src="" alt="" class="iconNow"/>
+                <div class="description">Bewölkt</div>
+                <div class="uvi">UV index: </div>
+                <div class="air-quality">Luftqualität: 0(Ausgezeichnet)</div>
+            </div>
+            <div class = "weatherIcon">
+                <div class="dt">Um 00:00 Uhr</div>
+                <div class="feels_like">Gefühlt: 16 °C</div>
+                <div class = "Nachts">Nachts: </div>
+                <div class="humidity">Luftfeuchtigkeit: 45%</div>    
+                <div class="wind">Windgeschwindigkeit: 7 Kmh</div>
+                <Button id="showHistory">
+                    <svg height = "1em" width = "4em"></svg>
+                </Button>
+            </div>
+            <div class = "buttonRight">
+                <button id="next">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="12em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+                </button>
+            </div>
+        </div>
+        <div class= "weatherDays boxLeft">
+            <h2 id = "dayWeather">Dienstag, der 17.15.2022</h2>
+            
+            <div class="daysCard boxLeft">
+                <ul style="list-style: none;" id="days">
+                    <li><button id = "previousWeek">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+                    </button></li>
+                    <li><div class="daysMorning">12°C</div></li>
+                    <li><div class="daysDay">17°C</div></li>
+                    <li><div class="daysEve">15°C</div></li>
+                    <li><div class = "daysNight">11°C</div></li>
+                    <li><button id="nextWeek">
+                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+                    </button></li>
+                </ul>
+            </div>
+        </div>
+        <div class = "weatherWeek">
+            <div class = "weekCard boxLeft">
+            <h2>5 Tage übersicht</h2>
+                <ul style="list-style: none;" id="week">
+                    <li>
+                        <div class = "day1Name">Dienstag</div>
+                        <div class = "day1Temp">Tags: 17°C</div>
+                        <div class = "day1TempNight">Nachts: 15°C</div>
+                        <img src="" alt="" class="iconDay1"/>
+                    </li>
+
+                    <li>
+                        <div class = "day2Name">Dienstag</div>
+                        <div class = "day2Temp">Tags: 17°C</div>
+                        <div class = "day2TempNight">Nachts: 15°C</div>
+                        <img src="" alt="" class="iconDay2"/>
+                    </li>
+
+                    <li>
+                        <div class = "day3Name">Dienstag</div>
+                        <div class = "day3Temp">Tags: 17°C</div>
+                        <div class = "day3TempNight">Nachts: 15°C</div>
+                        <img src="" alt="" class="iconDay3"/>
+                    </li>
+
+                    <li>
+                        <div class = "day4Name">Dienstag</div>
+                        <div class = "day4Temp">Tags: 17°C</div>
+                        <div class = "day4TempNight">Nachts: 15°C</div>
+                        <img src="" alt="" class="iconDay4"/>
+                    </li>
+
+                    <li>
+                        <div class = "day5Name">Dienstag</div>
+                        <div class = "day5Temp">Tags: 17°C</div>
+                        <div class = "day5TempNight">Nachts: 15°C</div>
+                        <img src="" alt="" class="iconDay5"/>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class = "card">
-        <div class = "Pollen">
-            <h2 class="Pollen">Pollenflug in CyberCity</h2>
-            <div class = "Day">Tag</div>
-            <div class = "Ambrosia">Ambrosia: _   _   _</div>
-            <div class = "Beifuss">Beifuss: _   _   _</div>
-            <div class = "Birke">Birke: _   _   _</div>
-            <div class = "Erle">Erle: _   _   _</div>
-            <div class = "Esche">Esche: _   _   _</div>
-            <div class = "Gräser">Gräser: _   _   _</div>
-            <div class = "Hasel">Hasel: _   _   _</div>
-            <div class = "Roggen">Roggen: _   _   _</div>
-            <button id = "previousPollen">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
-            </button>
-            <button id = "nextPollen">
-                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
-            </button>
+        <div class = "warning">
+        
         </div>
-    </div>
-    <div class = "card">
-        <div class = "River">
-            <h2 class="River">Wasserstand der Meser in CyberCity</h2>
-            <div class= "water_level">Aktueller Wasserstand: x m, Trend: ++</div>
-            <div class= "last_hours">11:00:, 9:00: , 7:00: </div>
-            <div class= "last_days"> Mi: , Di: , Mo: , So: , Sa: </div>
-            <div class = "last_weeks">Vor einer Woche: cm  |  Vor zwei Wochen: cm </div>
+    <div class="element right">
+        <div class = "card">
+            <div class = "River">
+                <h2 class="River">Wasserstand der Meser in CyberCity</h2>
+                <div class= "water_level">Aktueller Wasserstand: x m, Trend: ++</div>
+                <div class= "last_hours">11:00:, 9:00: , 7:00: </div>
+                <div class= "last_days"> Mi: , Di: , Mo: , So: , Sa: </div>
+                <div class = "last_weeks">Vor einer Woche: cm  |  Vor zwei Wochen: cm </div>
+            </div>
         </div>
     </div>
 </body>
