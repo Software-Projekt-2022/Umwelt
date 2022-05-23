@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width", initial-scale="1.0">
     <title>Wetter in CyberCity</title>
     <link rel="stylesheet" href="style.css">
-    <script src="./api-handler.js" defer></script>
+    <script src="api-handler.js" defer></script>
 </head>
 <body>
     <div class = "element">
@@ -17,22 +17,19 @@
                 </button>
             </div>
             <div class = "weatherNow">
-                <div class="date">Am 24.04.2022</div>
-                <div class="temperaturNow">Temperatur: 0°C</div>
+                <div class="date"></div>
+                <div class="temperaturNow"></div>
                 <img src="" alt="" class="iconNow"/>
-                <div class="description">Bewölkt</div>
-                <div class="uvi">UV index: </div>
-                <div class="air-quality">Luftqualität: 0(Ausgezeichnet)</div>
+                <div class="description"></div>
+                <div class="uvi"></div>
+                <div class="air-quality"></div>
             </div>
             <div class = "weatherIcon">
-                <div class="dt">Um 00:00 Uhr</div>
-                <div class="feels_like">Gefühlt: 16 °C</div>
-                <div class = "Nachts">Nachts: </div>
-                <div class="humidity">Luftfeuchtigkeit: 45%</div>    
-                <div class="wind">Windgeschwindigkeit: 7 Kmh</div>
-                <Button id="showHistory">
-                    <svg height = "1em" width = "4em"></svg>
-                </Button>
+                <div class="dt"></div>
+                <div class="feels_like"></div>
+                <div class = "Nachts"></div>
+                <div class="humidity"></div>    
+                <div class="wind"></div>
             </div>
             <div class = "buttonRight">
                 <button id="next">
@@ -41,17 +38,17 @@
             </div>
         </div>
         <div class= "weatherDays boxLeft">
-            <h2 id = "dayWeather">Dienstag, der 17.15.2022</h2>
+            <h2 id = "dayWeather"></h2>
             
             <div class="daysCard boxLeft">
                 <ul style="list-style: none;" id="days">
                     <li><button id = "previousWeek">
                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
                     </button></li>
-                    <li><div class="daysMorning">12°C</div></li>
-                    <li><div class="daysDay">17°C</div></li>
-                    <li><div class="daysEve">15°C</div></li>
-                    <li><div class = "daysNight">11°C</div></li>
+                    <li><div class="daysMorning"></div></li>
+                    <li><div class="daysDay"></div></li>
+                    <li><div class="daysEve"></div></li>
+                    <li><div class = "daysNight"></div></li>
                     <li><button id="nextWeek">
                         <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
                     </button></li>
@@ -63,37 +60,37 @@
             <h2>5 Tage übersicht</h2>
                 <ul style="list-style: none;" id="week">
                     <li>
-                        <div class = "day1Name">Dienstag</div>
-                        <div class = "day1Temp">Tags: 17°C</div>
-                        <div class = "day1TempNight">Nachts: 15°C</div>
+                        <div class = "day1Name"></div>
+                        <div class = "day1Temp"></div>
+                        <div class = "day1TempNight"></div>
                         <img src="" alt="" class="iconDay1"/>
                     </li>
 
                     <li>
-                        <div class = "day2Name">Dienstag</div>
-                        <div class = "day2Temp">Tags: 17°C</div>
-                        <div class = "day2TempNight">Nachts: 15°C</div>
+                        <div class = "day2Name"></div>
+                        <div class = "day2Temp"></div>
+                        <div class = "day2TempNight"></div>
                         <img src="" alt="" class="iconDay2"/>
                     </li>
 
                     <li>
-                        <div class = "day3Name">Dienstag</div>
-                        <div class = "day3Temp">Tags: 17°C</div>
-                        <div class = "day3TempNight">Nachts: 15°C</div>
+                        <div class = "day3Name"></div>
+                        <div class = "day3Temp"></div>
+                        <div class = "day3TempNight"></div>
                         <img src="" alt="" class="iconDay3"/>
                     </li>
 
                     <li>
-                        <div class = "day4Name">Dienstag</div>
-                        <div class = "day4Temp">Tags: 17°C</div>
-                        <div class = "day4TempNight">Nachts: 15°C</div>
+                        <div class = "day4Name"></div>
+                        <div class = "day4Temp"></div>
+                        <div class = "day4TempNight"></div>
                         <img src="" alt="" class="iconDay4"/>
                     </li>
 
                     <li>
-                        <div class = "day5Name">Dienstag</div>
-                        <div class = "day5Temp">Tags: 17°C</div>
-                        <div class = "day5TempNight">Nachts: 15°C</div>
+                        <div class = "day5Name"></div>
+                        <div class = "day5Temp"></div>
+                        <div class = "day5TempNight"></div>
                         <img src="" alt="" class="iconDay5"/>
                     </li>
                 </ul>
@@ -107,7 +104,7 @@
             <div class = "card">
                 <div class = "River">
                     <h2 class="River">Wasserstand der Meser in CyberCity</h2>
-                    <div class= "water_level">Aktueller Wasserstand: x m, Trend: ++</div>
+                    <div class= "water_level">Aktueller Wasserstand:  m, Trend: </div>
                     <div class= "last_hours">11:00:, 9:00: , 7:00: </div>
                     <div class= "last_days"> Mi: , Di: , Mo: , So: , Sa: </div>
                     <div class = "last_weeks">Vor einer Woche: cm  |  Vor zwei Wochen: cm </div>
