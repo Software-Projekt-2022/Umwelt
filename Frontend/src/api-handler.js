@@ -12,7 +12,9 @@ let weather = {
     json: currentPollen=null,
     json: currentRiver=null,
     "apiKey": "60918bc5fea5594f5317de56f954851c",
-
+    /**
+     * Fetches Airdata from openweathermap
+     */
     fetchAir: function(){
 
         fetch(
@@ -23,6 +25,9 @@ let weather = {
             
     },
 
+    /**
+     * Fetches weatherdata from openweathermap
+     */
     fetchWeather: function() {
 
         fetch(
@@ -33,6 +38,10 @@ let weather = {
             .then((currentWeather) => this.displayWeather(currentWeather))
     },
     
+    /**
+     * Fills the complete "Wetter in Cybercity" section with data
+     * @param {JSON} data 
+     */
     displayWeather: function(data){
         var weekday=new Array(14);
         weekday[0]="Sonntag";
@@ -50,6 +59,9 @@ let weather = {
         weekday[12]="Freitag";
         weekday[13]="Samstag";
 
+        /**
+         * Displays the detailed weather and air data at a certain time depending on displayTime in a range of right now to +48 Hours  
+         */
         if(displayTime!=0){
             console.log(data);
             console.log(currentAir.list[0].main);
@@ -92,6 +104,9 @@ let weather = {
             document.querySelector(".air-quality").innerText = "Luftqualität:"+ airQuality + "("+this.airText+")";
         }
 
+        /**
+         * displays the temperature for each day(morning, day, evening and night) in a range from tomorrow to +6 days 
+         */
         if(displayDay==0){
             var dtDay = data.current.dt;
             millisecondsDay = dtDay * 1000;
@@ -117,34 +132,38 @@ let weather = {
             document.querySelector(".daysEve").innerText ="Abends:\n"+ data.daily[displayDay+1].temp.eve.toFixed(1) + "°C";
             document.querySelector(".daysNight").innerText = "Nachts:\n"+data.daily[displayDay+1].temp.night.toFixed(1) + "°C";
         }
+
+        /**
+         * displayes the weather for the next 5 days 
+         */
         var dtWeek = data.daily[0].dt;
         millisecondsWeek = dtWeek * 1000;
         var date = new Date(millisecondsWeek);
 
         document.querySelector(".day1Name").innerText = weekday[date.getDay()+1];
-        document.querySelector(".day1Temp").innerText = data.daily[2].temp.day.toFixed(1) + "C";
-        document.querySelector(".day1TempNight").innerText = data.daily[2].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay1").src = "https://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon +".png";
+        document.querySelector(".day1Temp").innerText = data.daily[1].temp.day.toFixed(1) + "C";
+        document.querySelector(".day1TempNight").innerText = data.daily[1].temp.night.toFixed(1) + "C";
+        document.querySelector(".iconDay1").src = "https://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon +".png";
 
         document.querySelector(".day2Name").innerText = weekday[date.getDay()+2];
-        document.querySelector(".day2Temp").innerText = data.daily[3].temp.day.toFixed(1) + "C";
-        document.querySelector(".day2TempNight").innerText = data.daily[3].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay2").src = "https://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon +".png";
+        document.querySelector(".day2Temp").innerText = data.daily[2].temp.day.toFixed(1) + "C";
+        document.querySelector(".day2TempNight").innerText = data.daily[2].temp.night.toFixed(1) + "C";
+        document.querySelector(".iconDay2").src = "https://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon +".png";
 
         document.querySelector(".day3Name").innerText = weekday[date.getDay()+3];
-        document.querySelector(".day3Temp").innerText = data.daily[4].temp.day.toFixed(1) + "C";
-        document.querySelector(".day3TempNight").innerText = data.daily[4].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay3").src = "https://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon +".png";
+        document.querySelector(".day3Temp").innerText = data.daily[3].temp.day.toFixed(1) + "C";
+        document.querySelector(".day3TempNight").innerText = data.daily[3].temp.night.toFixed(1) + "C";
+        document.querySelector(".iconDay3").src = "https://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon +".png";
 
         document.querySelector(".day4Name").innerText = weekday[date.getDay()+4];
-        document.querySelector(".day4Temp").innerText = data.daily[5].temp.day.toFixed(1) + "C";
-        document.querySelector(".day4TempNight").innerText = data.daily[5].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay4").src = "https://openweathermap.org/img/wn/" + data.daily[5].weather[0].icon +".png";
+        document.querySelector(".day4Temp").innerText = data.daily[4].temp.day.toFixed(1) + "C";
+        document.querySelector(".day4TempNight").innerText = data.daily[4].temp.night.toFixed(1) + "C";
+        document.querySelector(".iconDay4").src = "https://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon +".png";
 
         document.querySelector(".day5Name").innerText = weekday[date.getDay()+5];
-        document.querySelector(".day5Temp").innerText = data.daily[6].temp.day.toFixed(1) + "C";
-        document.querySelector(".day5TempNight").innerText = data.daily[6].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + data.daily[6].weather[0].icon +".png";
+        document.querySelector(".day5Temp").innerText = data.daily[5].temp.day.toFixed(1) + "C";
+        document.querySelector(".day5TempNight").innerText = data.daily[5].temp.night.toFixed(1) + "C";
+        document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + data.daily[5].weather[0].icon +".png";
     },
 
 
@@ -176,7 +195,11 @@ let weather = {
         }
         weather.fetchWeather(currentWeather)
     },
-
+    
+    /**
+     * turns the air quality int into text
+     * @param {int} quality 
+     */
     airQualityText: function(quality){
         switch(quality){
             case 1:
@@ -197,6 +220,9 @@ let weather = {
         }
     },
 
+    /**
+     * evaluates the if the air is fine, sends event if not
+     */
     airEvaluation: function(){
         if(currentAir.list[displayTime].main.aqi>3){
             //event erstellen luft schlecht
@@ -206,6 +232,9 @@ let weather = {
 
 let pollen = {
 
+    /**
+     * fetches pollendata for Ostwestfalen
+     */
     fetchPollen: function(){
         fetch("https://api.achoo.dev/pollen/subregion/Ostwestfalen")
     .then((response) => response.json())
@@ -213,6 +242,10 @@ let pollen = {
     .then((currentPollen) => this.displayPollen(currentPollen))
     },
 
+    /**
+     * Fills the complete "Pollenflug in Cybercity" section with data
+     * @param {JSON} data 
+     */
     displayPollen: function(data){
         var Pollen = [];
         Pollen = data.pollen;
@@ -261,7 +294,11 @@ let pollen = {
     }
 }
 
-let River= {
+let River = {
+
+    /**
+     * Fetches water level from pegelonline
+     */
     fetchRiver: function(){
         fetch("https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/VLOTHO/W/measurements.json?start=P15D")
     .then((response) => response.json())
@@ -269,10 +306,18 @@ let River= {
     .then((currentRiver) => this.displayRiver(currentRiver))
     },
 
+    /**
+     * Fills the complete "Wasserstand der Meser in CyberCity" section with data
+     * @param {JSON} data 
+     */
     displayRiver: function(data) {
         console.log(data);
         var date=new Date();
         var lastDays=[3];
+
+        /**
+         * Get last 3 days
+         */
         switch(date.getDay()){
             case 0:
                 lastDays[0]="Sa";
@@ -311,7 +356,6 @@ let River= {
                 break;
         }
 
-
         document.querySelector(".water_level").innerText = "Aktueller Wasserstand: "+data[data.length-1].value+" cm";
         document.querySelector(".last_hours").innerText = 
         data[data.length-13].timestamp.slice(11,16)+" Uhr: " +data[data.length-13].value+" cm  |  " +
@@ -328,9 +372,10 @@ let River= {
 };
 
 
-
+/**
+ * Button listeners
+ */
 document.getElementById("previous").addEventListener("click", function(){
-    console.log("previous");
     weather.previous();
 });
 
