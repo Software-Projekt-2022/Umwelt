@@ -49,10 +49,16 @@ div.weatherIcon{
     float: right;
     border-right: solid;
     border-color: #292929;
-    padding: 10px;
+    padding: 24px;
     margin: 10px;
-    line-height: 120%;
+    line-height: 150%;
 }
+
+div.buttonRight{
+    size: 110%;
+}
+
+
 
 div.weatherDays{
     border-style: solid;
@@ -67,7 +73,7 @@ div.weatherDays{
 div.boxLeft{
     float: left;
     color: #292929;
-    margin-right: 80px;
+    margin-right: 50px;
 }
 
 div.weatherDays h2{
@@ -78,6 +84,7 @@ div.daysCard li{
     border: #292929;
     border-style: solid;
     background-color: #102542;
+    
     color: antiquewhite;
     float: left;
     display: inline-table;
@@ -105,7 +112,7 @@ div.weekCard li{
     float: left;
     margin-left: 0%;
     display: inline-table;
-    size: 100%;
+    size: 120%;
 }
 
 div.right {
