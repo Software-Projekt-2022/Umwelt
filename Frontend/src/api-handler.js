@@ -141,7 +141,7 @@ let weather = {
         document.querySelector(".day4TempNight").innerText = data.daily[5].temp.night.toFixed(1) + "C";
         document.querySelector(".iconDay4").src = "https://openweathermap.org/img/wn/" + data.daily[5].weather[0].icon +".png";
 
-        document.querySelector(".day5Name").innerText = weekday[date.getDay()-2];
+        document.querySelector(".day5Name").innerText = weekday[date.getDay()+5];
         document.querySelector(".day5Temp").innerText = data.daily[6].temp.day.toFixed(1) + "C";
         document.querySelector(".day5TempNight").innerText = data.daily[6].temp.night.toFixed(1) + "C";
         document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + data.daily[6].weather[0].icon +".png";
@@ -242,17 +242,13 @@ let pollen = {
     },
 
     nextPollen: function() {
-        if(pollenDay<3){
-            pollenDay++;
-        }
-        pollen.fetchPollen(currentPollen)
+        pollenDay=1;
+        pollen.displayPollen(currentPollen)
     },
 
     previousPollen: function() {
-        if(pollenDay>0){
-            pollenDay--;
-        }
-        pollen.fetchPollen(currentPollen)
+        pollenDay=0;
+        pollen.displayPollen(currentPollen)
     },
 
     pollenEvaluation: function() {
