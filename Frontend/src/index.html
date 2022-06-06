@@ -8,128 +8,148 @@
     <script src="api-handler.js" defer></script>
 </head>
 <body>
-    <div class = "element">
-        <h2>Wetter in CyberCity</h2>
-        <div class="now">
-            <div class="buttonLeft">
-                <button id = "previous">
-                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="12em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
-                </button>
+    <div class = "main">
+        <div class = "element left">
+            <h2>Wetter in CyberCity</h2>
+            <div class="now">
+                <ul style="list-style: none; padding-left: 0px;">
+                    <li>
+                        <div class="buttonLeft btn">
+                            <button id = "previous">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="12em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+                            </button>
+                        </div>
+                    </li>
+                    <li>
+                        <div class = "weatherNow">
+                            <div class="date"></div>
+                            <div class="temperaturNow"></div>
+                            <img src="" alt="" class="iconNow"/>
+                            <div class="description"></div>
+                            <div class="uvi"></div>
+                            <div class="air-quality"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class = "weatherIcon">
+                            <div class="dt"></div>
+                            <div class="feels_like"></div>
+                            <div class = "Nachts"></div>
+                            <div class="humidity"></div>    
+                            <div class="wind"></div>
+                            <div class="air-qualityText"></div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class = "buttonRight btn">
+                            <button id="next">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="12em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+                            </button>
+                        </div>
+                    </li>
+                </ul>
             </div>
-            <div class = "weatherNow">
-                <div class="date"></div>
-                <div class="temperaturNow"></div>
-                <img src="" alt="" class="iconNow"/>
-                <div class="description"></div>
-                <div class="uvi"></div>
-                <div class="air-quality"></div>
+            <div class= "weatherDays boxLeft">
+                <h2 id = "dayWeather"></h2>
+                <div class="daysCard boxLeft">
+                    <ul style="list-style: none;" id="days">
+                        <li><button id = "previousWeek">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+                        </button></li>
+                        <li><div class="daysMorning"></div></li>
+                        <li><div class="daysDay"></div></li>
+                        <li><div class="daysEve"></div></li>
+                        <li><div class = "daysNight"></div></li>
+                        <li><button id="nextWeek">
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+                        </button></li>
+                    </ul>
+                </div>
             </div>
-            <div class = "weatherIcon">
-                <div class="dt"></div>
-                <div class="feels_like"></div>
-                <div class = "Nachts"></div>
-                <div class="humidity"></div>    
-                <div class="wind"></div>
+
+            <div class = "weatherWeek">
+                <div class = "weekCard boxLeft">
+                    <h2>5 Tage übersicht</h2>
+                    <ul style="list-style: none;" id="week">
+                        <li>
+                            <div class = "day1Name"></div>
+                            <div class = "day1Temp"></div>
+                            <div class = "day1TempNight"></div>
+                            <img src="" alt="" class="iconDay1"/>
+                        </li>
+
+                        <li>
+                            <div class = "day2Name"></div>
+                            <div class = "day2Temp"></div>
+                            <div class = "day2TempNight"></div>
+                            <img src="" alt="" class="iconDay2"/>
+                        </li>
+
+                        <li>
+                            <div class = "day3Name"></div>
+                            <div class = "day3Temp"></div>
+                            <div class = "day3TempNight"></div>
+                            <img src="" alt="" class="iconDay3"/>
+                        </li>
+
+                        <li>
+                            <div class = "day4Name"></div>
+                            <div class = "day4Temp"></div>
+                            <div class = "day4TempNight"></div>
+                            <img src="" alt="" class="iconDay4"/>
+                        </li>
+
+                        <li>
+                            <div class = "day5Name"></div>
+                            <div class = "day5Temp"></div>
+                            <div class = "day5TempNight"></div>
+                            <img src="" alt="" class="iconDay5"/>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <div class = "buttonRight">
-                <button id="next">
-                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="12em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
-                </button>
+            <div class = "warning">
+                <h2 class="warnungh2">ACHTUNG HOCHWASSER</h2>
+                <div class="Warnung Text">Der stand der Meser wird in den folgenden Tagen stark steigen, bitte beachten sie die hinweise der Feuerwehr!</div>
             </div>
         </div>
-        <div class= "weatherDays boxLeft">
-            <h2 id = "dayWeather"></h2>
             
-            <div class="daysCard boxLeft">
-                <ul style="list-style: none;" id="days">
-                    <li><button id = "previousWeek">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
-                    </button></li>
-                    <li><div class="daysMorning"></div></li>
-                    <li><div class="daysDay"></div></li>
-                    <li><div class="daysEve"></div></li>
-                    <li><div class = "daysNight"></div></li>
-                    <li><button id="nextWeek">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="10em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
-                    </button></li>
-                </ul>
-            </div>
-        </div>
-        <div class = "weatherWeek">
-            <div class = "weekCard boxLeft">
-            <h2>5 Tage übersicht</h2>
-                <ul style="list-style: none;" id="week">
-                    <li>
-                        <div class = "day1Name"></div>
-                        <div class = "day1Temp"></div>
-                        <div class = "day1TempNight"></div>
-                        <img src="" alt="" class="iconDay1"/>
-                    </li>
-
-                    <li>
-                        <div class = "day2Name"></div>
-                        <div class = "day2Temp"></div>
-                        <div class = "day2TempNight"></div>
-                        <img src="" alt="" class="iconDay2"/>
-                    </li>
-
-                    <li>
-                        <div class = "day3Name"></div>
-                        <div class = "day3Temp"></div>
-                        <div class = "day3TempNight"></div>
-                        <img src="" alt="" class="iconDay3"/>
-                    </li>
-
-                    <li>
-                        <div class = "day4Name"></div>
-                        <div class = "day4Temp"></div>
-                        <div class = "day4TempNight"></div>
-                        <img src="" alt="" class="iconDay4"/>
-                    </li>
-
-                    <li>
-                        <div class = "day5Name"></div>
-                        <div class = "day5Temp"></div>
-                        <div class = "day5TempNight"></div>
-                        <img src="" alt="" class="iconDay5"/>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-        <div class = "warning">
-        
-        </div>
-        <div class="element right">
-            <div class = "card">
-                <div class = "River">
+            <div class="element right">
+                <div class = "River right">
                     <h2 class="River">Wasserstand der Meser in CyberCity</h2>
                     <div class= "water_level">Aktueller Wasserstand:  m, Trend: </div>
                     <div class= "last_hours">11:00:, 9:00: , 7:00: </div>
-                    <div class= "last_days"> Mi: , Di: , Mo: , So: , Sa: </div>
+                    <div class= "last_days">Mi: , Di: , Mo: , So: , Sa: </div>
                     <div class = "last_weeks">Vor einer Woche: cm  |  Vor zwei Wochen: cm </div>
                 </div>
-            </div>
-        </div>
-        <div class = "element bottom">
-            <div class = "card">
-                <div class = "Pollen">
-                    <h2 class="Pollen">Pollenflug in CyberCity</h2>
-                    <div class = "Day">Tag</div>
-                    <div class = "Ambrosia">Ambrosia: _   _   _</div>
-                    <div class = "Beifuss">Beifuss: _   _   _</div>
-                    <div class = "Birke">Birke: _   _   _</div>
-                    <div class = "Erle">Erle: _   _   _</div>
-                    <div class = "Esche">Esche: _   _   _</div>
-                    <div class = "Gräser">Gräser: _   _   _</div>
-                    <div class = "Hasel">Hasel: _   _   _</div>
-                    <div class = "Roggen">Roggen: _   _   _</div>
-                    <button id = "previousPollen">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
-                    </button>
-                    <button id = "nextPollen">
-                        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
-                    </button>
+                    <div class="mobileRight">
+                        <div class="aktivities right">
+                            <h2>
+                                Aktivitäten in CyberCity
+                            </h2>
+                        </div>
+
+                        <div class = "bottom right">
+                            <div class = "Pollen">
+                                <h2 class="Pollen">Pollenflug in CyberCity</h2>
+                                <div class = "Day">Tag</div>
+                                <div class = "Ambrosia">Ambrosia: _   _   _</div>
+                                <div class = "Beifuss">Beifuss: _   _   _</div>
+                                <div class = "Birke">Birke: _   _   _</div>
+                                <div class = "Erle">Erle: _   _   _</div>
+                                <div class = "Esche">Esche: _   _   _</div>
+                                <div class = "Gräser">Gräser: _   _   _</div>
+                                <div class = "Hasel">Hasel: _   _   _</div>
+                                <div class = "Roggen">Roggen: _   _   _</div>
+                                <button id = "previousPollen">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+                                </button>
+                                <button id = "nextPollen">
+                                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
