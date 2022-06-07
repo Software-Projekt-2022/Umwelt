@@ -21,7 +21,7 @@ div.element h2{
 
 div.left {
     float: left;
-    transform: scale(0.85);
+    transform: scale(0.79);
     transform-origin: 0 0;
     
 }
@@ -151,6 +151,11 @@ div.warning{
 div.right {
     float: right;
     width: max-content;
+    transform: scale(0.94);
+    transform-origin: 0 0 0 0;
+    padding-right: 0%;
+    margin-top: 0%;
+    margin-right: 0%;
 }
 
 h2.River{
@@ -163,6 +168,8 @@ div.River{
     color: #f7fff7;
     padding: 5%;
     margin: 5%;
+    margin-right: 0%;
+    margin-top: 0%;
 }
 
 div.aktivities{
@@ -171,6 +178,7 @@ div.aktivities{
     color: #f7fff7;
     padding: 5%;
     margin: 5%;
+    margin-right: 0%;
 }
 
 div.bottom {
@@ -179,6 +187,7 @@ div.bottom {
     color: #f7fff7;
     padding: 5%;
     margin: 5%;
+    margin-right: 0%;
 }
 
 @media (min-width: 240px) and (max-width: 768px) {
