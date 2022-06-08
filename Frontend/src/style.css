@@ -21,9 +21,8 @@ div.element h2{
 
 div.left {
     float: left;
-    transform: scale(0.79);
+    transform: scale(80%);
     transform-origin: 0 0;
-    
 }
 
 div.now{
@@ -190,16 +189,16 @@ div.bottom {
     margin-right: 0%;
 }
 
-@media (min-width: 240px) and (max-width: 768px) {
+@media (min-width: 240px) and (max-width: 768px), (orientation: portrait){
     
     body{
         background-image: url('media/Banner.jpg');
         overflow: visible;
+        width: 100%;
     }
 
     div.main{
         display: inline-grid;
-        width: 100%;
     }
 
     div.left{
@@ -211,6 +210,7 @@ div.bottom {
 
     div.now{
         margin: 1%;
+
         padding-left: 3%;
         padding-right: 3%;
     }
@@ -254,16 +254,18 @@ div.bottom {
 
     div.right {
         float: none;
+        display: inline-block;
+        margin-left: 1%;
+        transform: scale(1);
     }
     div.River{
-
-        margin: 1%;
-        margin-bottom: 5%;
+        margin: 0%;
+        margin-bottom: 3%;
     }
 
     div.mobileRight{
         display: flex;
-        transform: scale(0.85);
+        transform: scale(0.8);
         transform-origin: 0 0;
     }
 
@@ -277,5 +279,30 @@ div.bottom {
         float: right;
         margin: 0%;
         width: 50%;
+    }
+}
+
+@media (min-width: 2550px) {
+    div.left{
+        
+        transform: scale(1.5);
+        transform-origin: 0,0;
+    }
+    div.right{
+        transform: scale(1.3);
+        transform-origin: 0,0;
+        margin: 5%;
+        margin-top: 7%;
+    }
+    div.River{
+        margin-right: 10%;
+        margin-bottom: 7%;
+    }
+    div.aktivities{
+        margin-right: 7%;
+        margin-bottom: 10%;
+    }
+    div.bottom{
+        margin-right: 6.5%;
     }
 }
