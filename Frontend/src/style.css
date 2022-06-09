@@ -1,12 +1,12 @@
 body{
     background-image: url('media/Banner.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
     background-color: #102542;
     overflow: hidden;
     white-space: nowrap;
     position: static;
     width: 100%;
-    
 }
 
 div.element {
@@ -21,7 +21,7 @@ div.element h2{
 
 div.left {
     float: left;
-    transform: scale(80%);
+    transform: scale(78%);
     transform-origin: 0 0;
 }
 
@@ -189,21 +189,23 @@ div.bottom {
     margin-right: 0%;
 }
 
-@media (min-width: 240px) and (max-width: 768px), (orientation: portrait){
+@media (min-width: 240px) and (orientation: portrait){
     
     body{
         background-image: url('media/Banner.jpg');
         overflow: visible;
-        width: 100%;
+        background-size: auto;
     }
 
     div.main{
         display: inline-grid;
+        transform: scale(150%);
+        transform-origin: 0 0;
     }
 
     div.left{
         float: none;
-        transform: scale(1);
+        transform: scale(100%);
         transform-origin: 0 0;
         margin-bottom: 1%;
     }
@@ -279,6 +281,128 @@ div.bottom {
         float: right;
         margin: 0%;
         width: 50%;
+    }
+}
+
+@media (min-width: 1000px) and (max-width: 1124px) and (orientation: landscape){
+    body{
+        background-image: url('media/Banner.jpg');
+        overflow: inherit;
+    }
+    
+
+    div.element{
+        margin-right: 0%;
+    }
+
+    div.main{
+        margin-top: 0%;
+    }
+
+    div.left{
+        float: left;
+        display: inline-grid;
+        width: max-content;
+        transform: scale(0.75);
+        transform-origin: 0 0;
+        margin-bottom: 1%;
+    }
+
+    div.now{
+        width: fit-content;
+    }
+
+    div.right{
+        width:  inherit;
+        float: none;
+        display: grid;
+        margin-right: 5%;
+        margin-top: 0%;
+        margin-bottom: 0%;
+        transform: scale(90%);
+        transform-origin: right top;
+    }
+
+    div.River{
+        width: fit-content;
+        margin-top: 7%;
+        margin-left: 2%;
+        margin-right: 3%;
+        margin-bottom: 0%;
+    }
+
+    div.aktivities{
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+
+    div.bottom {
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+}
+
+@media (min-width: 240px) and (max-width: 1000px) and (orientation: landscape){
+    body{
+        background-image: url('media/Banner.jpg');
+        overflow: inherit;
+    }
+
+    div.element{
+        margin-right: 0%;
+    }
+
+    div.main{
+        margin-top: 0%;
+    }
+
+    div.left{
+        float: left;
+        display: inline-grid;
+        width: max-content;
+        transform: scale(0.48);
+        transform-origin: 0 0;
+        margin-bottom: 1%;
+    }
+
+    div.now{
+        width: fit-content;
+    }
+
+    div.right{
+        width:  inherit;
+        float: none;
+        display: grid;
+        margin-right: 5%;
+        margin-top: 0%;
+        margin-bottom: 0%;
+        transform: scale(83%);
+        transform-origin: right top;
+    }
+
+    div.River{
+        width: fit-content;
+        margin-left: 0%;
+        margin-right: 3%;
+        margin-bottom: 0%;
+    }
+
+    div.aktivities{
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+
+    div.bottom {
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
     }
 }
 
