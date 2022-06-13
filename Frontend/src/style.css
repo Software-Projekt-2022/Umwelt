@@ -1,103 +1,124 @@
 body{
     background-image: url('media/Banner.jpg');
     background-size: cover;
+    background-repeat: no-repeat;
     background-color: #102542;
+    overflow: hidden;
+    white-space: nowrap;
+    position: static;
+    width: 100%;
 }
+
 div.element {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font: url("/fonts/roboto.regular.ttf");
-    float: left;
-    border: #292929;
-    border: solid;
-    margin: 0%;
-    padding: 0%;
 }
 
 div.element h2{
     margin: 0%;
+    margin-left: 2%;
 }
 
 div.left {
-    border-style: solid;
-    border-color: #292929;
-    color: #292929;
-    padding: 5px;
-    margin: 8px;
+    float: left;
+    transform: scale(78%);
+    transform-origin: 0 0;
 }
 
 div.now{
-    display: flex;
-    align-items: flex-start;
+    display: inline-block;
     border-style: solid;
-    border-color: #292929;
-    color: #292929;
-    padding: 10px;
-    margin: 10px;
+    list-style-position: inside;
     line-height: 150%;
+    border-color: #f7fff7;
+    background-color: #102542;
+    color: #f7fff7;
+    margin-left: 2%;
+    margin-right: 2%;
+    margin-top: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    overflow: hidden;
+}
+
+div.now li{
+    position: relative;
+    vertical-align: middle;
+    padding: 0%;
+    margin: 0%;
+    display: inline-block;
+    color: #f7fff7;
 }
 
 div.weatherNow{
     float: left;
     border-left: solid;
-    border-color: #292929;
     padding: 10px;
     margin: 10px;
-    line-height: 120%;
+    line-height: 150%;
+    background-color: #102542;
+    color: #f7fff7;
+    resize: none;
+    width: 180px;
 }
 
 div.weatherIcon{
     float: right;
     border-right: solid;
-    border-color: #292929;
-    padding: 24px;
+    padding: 5%;
+    position: relative;
     margin: 10px;
-    line-height: 150%;
+    line-height: 160%;
+    background-color: #102542;
+    color: #f7fff7;
+    min-width: 50%;
+}
+
+div.btn{
+    border: #f7fff7;
+    border-style: solid;
+    vertical-align: middle;
+    padding: 10%;
 }
 
 div.buttonRight{
-    size: 110%;
-}
-
-
-
-div.weatherDays{
-    border-style: solid;
-    border-color: #292929;
-    color: #292929;
-    padding: 10px;
-    margin: 10px;
-    line-height: 150%;
-    
-}
-
-div.boxLeft{
-    float: left;
-    color: #292929;
-    margin-right: 50px;
+    float: right;
+    position: relative;
 }
 
 div.weatherDays h2{
-    margin: 0%;
+    margin: 0%;    
+    border-color: #f7fff7;
+    background-color: #102542;
+    color: #f7fff7;
+}
+
+div.weatherDays{
+    border-style: solid;
+    border-color: #f7fff7;
+    background-color: #102542;
+    color: #f7fff7;
+    padding: 2%;
+    margin: 2%;
 }
 
 div.daysCard li{
-    border: #292929;
     border-style: solid;
+    vertical-align: middle;
+    padding: 1%;
+    display: inline-block;
+    border-color: #f7fff7;
     background-color: #102542;
-    
     color: #f7fff7;
-    float: left;
-    display: inline-table;
-    size: 100%;
 }
 
 div.weekCard{
-    border: #292929;
     border-style: solid;
-    padding: 10px;
-    margin: 10px;
-    line-height: 150%;
-    float: left;
+    border-color: #f7fff7;
+    background-color: #102542;
+    color: #f7fff7;
+    padding: 2%;
+    margin: 2%;
 }
 
 div.weekCard h2{
@@ -105,34 +126,332 @@ div.weekCard h2{
 }
 
 div.weekCard li{
-    border: #292929;
     border-style: solid;
+    vertical-align: middle;
+    padding: 1%;
+    display: inline-block;
+    border-color: #f7fff7;
     background-color: #102542;
     color: #f7fff7;
-    float: left;
-    padding: 5px;
-    margin-left: 0%;
-    display: inline-table;
-    size: 120%;
 }
 
+div.warning{
+    border-style: solid;
+    border-color: red;
+    border-width: 5px;
+    background-color: #f7fff7;
+    color: red;
+    max-width: fit-content;
+    padding: 2%;
+    margin: 2%;
+    white-space:initial;
+}
 
 div.right {
     float: right;
+    width: max-content;
+    transform: scale(0.94);
+    transform-origin: 0 0 0 0;
+    padding-right: 0%;
+    margin-top: 0%;
+    margin-right: 0%;
+}
+
+h2.River{
+    padding: 1%;
+}
+
+div.River{
     border-style: solid;
-    border-color: #292929;
-    color: #292929;
-    padding: 10px;
+    background-color: #102542;
+    color: #f7fff7;
+    padding: 5%;
+    margin: 0%;
+}
+
+div.aktivities{
+    border-style: solid;
+    background-color: #102542;
+    color: #f7fff7;
+    padding: 5%;
+    margin: 5%;
+    margin-right: 0%;
 }
 
 div.bottom {
-    position: fixed;
-    bottom: 0;
-    right: 0;
     border-style: solid;
-    border-color: #292929;
-    color: #292929;
-    padding: 10px;
-    margin: 10px;
+    background-color: #102542;
+    color: #f7fff7;
+    padding: 5%;
+    margin: 5%;
+    margin-right: 0%;
 }
 
+div.riverDiagramm{
+    position: fixed;
+    justify-content: center;
+    border-style: solid;
+    background-color: #102542;
+    color: #f7fff7;
+    padding: 5%;
+    padding-top: 0%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+@media (min-width: 240px) and (orientation: portrait){
+    
+    body{
+        background-image: url('media/Banner.jpg');
+        overflow: visible;
+        background-size: auto;
+    }
+
+    div.main{
+        display: inline-grid;
+        transform: scale(150%);
+        transform-origin: 0 0;
+    }
+
+    div.left{
+        float: none;
+        transform: scale(100%);
+        transform-origin: 0 0;
+        margin-bottom: 1%;
+    }
+
+    div.now{
+        margin: 1%;
+
+        padding-left: 3%;
+        padding-right: 3%;
+    }
+
+    div.btn{
+        padding: 0%;
+    }
+
+    div.weatherDays{
+        margin: 1%;
+        padding: 5%;
+    }
+
+    div.weatherDays li{
+        width: max-content;
+        
+    }
+
+    div.daysCard li{
+        border-style: solid;
+        vertical-align: middle;
+        padding: 0.5%;
+        display: inline-block;
+        border-color: #f7fff7;
+        background-color: #102542;
+        color: #f7fff7;
+    }
+
+    div.weatherDays h2{
+        padding-left: 0%;
+    }
+
+    div.weekCard{
+        margin: 1%;
+        padding: 5%;
+    }
+
+    div.warning{
+        margin: 1%;
+    }
+
+    div.right {
+        float: none;
+        display: inline-block;
+        margin-left: 1%;
+        transform: scale(1);
+    }
+    div.River{
+        margin: 0%;
+        margin-bottom: 3%;
+    }
+
+    div.mobileRight{
+        display: flex;
+        transform: scale(0.8);
+        transform-origin: 0 0;
+    }
+
+    div.aktivities{
+        float: left;
+        margin: 0%;
+        margin-right: 5%;
+        width: 50%;
+    }
+    div.bottom {
+        float: right;
+        margin: 0%;
+        width: 50%;
+    }
+    div.riverDiagramm{
+        position: fixed;
+        justify-content: center;
+        border-style: solid;
+        background-color: #102542;
+        color: #f7fff7;
+        padding: 5%;
+        padding-top: 0%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+}
+
+@media (min-width: 1000px) and (max-width: 1124px) and (orientation: landscape){
+    body{
+        background-image: url('media/Banner.jpg');
+        overflow: inherit;
+    }
+    
+
+    div.element{
+        margin-right: 0%;
+    }
+
+    div.main{
+        margin-top: 0%;
+    }
+
+    div.left{
+        float: left;
+        display: inline-grid;
+        width: max-content;
+        transform: scale(0.75);
+        transform-origin: 0 0;
+        margin-bottom: 1%;
+    }
+
+    div.now{
+        width: fit-content;
+    }
+
+    div.right{
+        width:  inherit;
+        float: none;
+        display: grid;
+        margin-right: 5%;
+        margin-top: 0%;
+        margin-bottom: 0%;
+        transform: scale(90%);
+        transform-origin: right top;
+    }
+
+    div.River{
+        width: fit-content;
+        margin-top: 7%;
+        margin-left: 2%;
+        margin-right: 3%;
+        margin-bottom: 0%;
+    }
+
+    div.aktivities{
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+
+    div.bottom {
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+}
+
+@media (min-width: 240px) and (max-width: 1000px) and (orientation: landscape){
+    body{
+        background-image: url('media/Banner.jpg');
+        overflow: inherit;
+    }
+
+    div.element{
+        margin-right: 0%;
+    }
+
+    div.main{
+        margin-top: 0%;
+    }
+
+    div.left{
+        float: left;
+        display: inline-grid;
+        width: max-content;
+        transform: scale(0.48);
+        transform-origin: 0 0;
+        margin-bottom: 1%;
+    }
+
+    div.now{
+        width: fit-content;
+    }
+
+    div.right{
+        width:  inherit;
+        float: none;
+        display: grid;
+        margin-right: 5%;
+        margin-top: 0%;
+        margin-bottom: 0%;
+        transform: scale(83%);
+        transform-origin: right top;
+    }
+
+    div.River{
+        width: fit-content;
+        margin-left: 0%;
+        margin-right: 3%;
+        margin-bottom: 0%;
+    }
+
+    div.aktivities{
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+
+    div.bottom {
+        margin: 0%;
+        margin-top: 0%;
+        margin-left: 2%;
+        white-space: initial;
+    }
+}
+
+@media (min-width: 2550px) {
+    div.left{
+        
+        transform: scale(1.5);
+        transform-origin: 0,0;
+    }
+    div.right{
+        transform: scale(1.3);
+        transform-origin: 0,0;
+        margin: 5%;
+        margin-top: 7%;
+    }
+    div.River{
+        margin-right: 10%;
+        margin-bottom: 7%;
+    }
+    div.aktivities{
+        margin-right: 7%;
+        margin-bottom: 10%;
+    }
+    div.bottom{
+        margin-right: 6.5%;
+    }
+}

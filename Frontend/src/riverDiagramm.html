@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <title>Wetter in CyberCity</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="buttonBack">
+        <a href="index.html">
+            <button>zurück</button>
+        </a>
+    </div>
+    
+    <div class="riverDiagramm" id="riverDiagramm">
+        <h1>Wasserstand Verlauf der letzten Tage</h1>
+        <img
+        src="https://pegelonline.wsv.de/webservices/rest-api/v2/stations/2f56e265-cd67-4ea1-8529-549b6ccf273a/W/measurements.png?start=P30D&width=925&height=220"
+        width="925"
+        height="220"
+        id="diagramm"
+        />
+        <div class="slider">
+            <div>Tage: </div>
+            <output for="slider" id="output">15</output>
+            <input id="riverSlider" type="range" min="2" max="30" step="1.0">
+        </div>        
+    </div>
+</body>
+<script src="riverDiagramm.js"></script>

@@ -72,8 +72,9 @@ let weather = {
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
             var time=date.toLocaleString("de-DE", {timeZoneName: "short"})
-            document.querySelector(".date").innerText = "Am " + time.slice(0,9);
-            document.querySelector(".dt").innerText = "Um " + time.slice(10, 19) +" Uhr";
+            timeSplit= time.split(" ");
+            document.querySelector(".date").innerText = "Am " + timeSplit[0];
+            document.querySelector(".dt").innerText = "Um " + timeSplit[1] +" Uhr";
             document.querySelector(".temperaturNow").innerText ="Temperatur: " + temp.toFixed(1) + " °C";
             document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like + " °C";
             document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[date.getDay()].temp.night + "°C";
@@ -81,8 +82,9 @@ let weather = {
             document.querySelector(".description").innerText = description;
             document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
             document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
-            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed + "kmh";
-            document.querySelector(".air-quality").innerText = "Luftqualität:"+ airQuality + "("+this.airText+")";
+            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed.toFixed(1) + "kmh";
+            document.querySelector(".air-quality").innerText = "";
+            document.querySelector(".air-qualityText").innerText = "Luftqualität: "+ airQuality +"("+this.airText+")";
         }else{
             var {icon, description} = data.current.weather[0];
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.current;
@@ -91,17 +93,19 @@ let weather = {
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
             var time=date.toLocaleString("de-DE", {timeZoneName: "short"})
-            document.querySelector(".date").innerText = "Am " + time.slice(0,9);
-            document.querySelector(".dt").innerText = "Um " + time.slice(10, 19) +" Uhr";
+            timeSplit= time.split(" ");
+            document.querySelector(".date").innerText = "Am " + timeSplit[0];
+            document.querySelector(".dt").innerText = "Um " + timeSplit[1] +" Uhr";
             document.querySelector(".temperaturNow").innerText ="Temperatur: " + temp.toFixed(1) + " °C";
             document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like.toFixed(1) + " °C";
             document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[0].temp.night.toFixed(1) + "°C";
             document.querySelector(".iconNow").src = "https://openweathermap.org/img/wn/" + icon +".png";
             document.querySelector(".description").innerText = description;
-            document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
+            document.querySelector(".uvi").innerText = "UV Index: "+ uvi.toFixed(2);
             document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
-            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed + "kmh";
-            document.querySelector(".air-quality").innerText = "Luftqualität:"+ airQuality + "("+this.airText+")";
+            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed.toFixed(1) + "kmh";
+            document.querySelector(".air-quality").innerText = "";
+            document.querySelector(".air-qualityText").innerText = "Luftqualität: "+ airQuality +"("+this.airText+")";
         }
 
         /**
@@ -113,8 +117,9 @@ let weather = {
             var day = new Date(millisecondsDay);
             day.setDate(day.getDate()+1);
             var dateDay=day.toLocaleString("de-DE", {timeZoneName: "short"})
-            
-            document.getElementById("dayWeather").innerText = weekday[day.getDay()] + ", der "+dateDay.slice(0,9);
+            datenb = dateDay.split(",");
+
+            document.getElementById("dayWeather").innerText = weekday[day.getDay()] + ", der "+datenb[0];
             document.querySelector(".daysMorning").innerText ="Morgens:\n"+ data.daily[1].temp.morn.toFixed(1) + "°C";
             document.querySelector(".daysDay").innerText ="Tagsüber:\n" + data.daily[1].temp.day.toFixed(1) + "°C";
             document.querySelector(".daysEve").innerText ="Abends:\n"+ data.daily[1].temp.eve.toFixed(1) + "°C";
@@ -125,8 +130,9 @@ let weather = {
             var day = new Date(millisecondsDay);
             day.setDate(day.getDate()+displayDay+1);
             var dateDay=day.toLocaleString("de-DE", {timeZoneName: "short"})
-            
-            document.getElementById("dayWeather").innerText = weekday[day.getDay()] + ", der "+dateDay.slice(0,9);
+            datenb = dateDay.split(",");
+
+            document.getElementById("dayWeather").innerText = weekday[day.getDay()] + ", der "+datenb[0];
             document.querySelector(".daysMorning").innerText ="Morgens:\n"+ data.daily[displayDay+1].temp.morn.toFixed(1) + "°C";
             document.querySelector(".daysDay").innerText ="Tagsüber:\n" + data.daily[displayDay+1].temp.day.toFixed(1) + "°C";
             document.querySelector(".daysEve").innerText ="Abends:\n"+ data.daily[displayDay+1].temp.eve.toFixed(1) + "°C";
@@ -228,6 +234,7 @@ let weather = {
             //event erstellen luft schlecht
         }
     }
+
 };
 
 let pollen = {
