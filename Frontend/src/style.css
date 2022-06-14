@@ -14,6 +14,17 @@ div.element {
     font: url("/fonts/roboto.regular.ttf");
 }
 
+#link{
+    color: #102542;
+    text-decoration: none;
+}
+
+#link:hover{
+    color: #102542;
+    text-decoration: underline;
+}
+
+
 div.element h2{
     margin: 0%;
     margin-left: 2%;
@@ -83,6 +94,11 @@ div.btn{
 
 div.buttonRight{
     float: right;
+    position: relative;
+}
+
+div.buttonLeft{
+    float: left;
     position: relative;
 }
 
@@ -183,6 +199,7 @@ div.bottom {
     background-color: #102542;
     color: #f7fff7;
     padding: 5%;
+    padding-bottom: 3%;
     margin: 5%;
     margin-right: 0%;
 }
@@ -428,6 +445,26 @@ div.riverDiagramm{
         margin-top: 0%;
         margin-left: 2%;
         white-space: initial;
+    }
+
+    div.riverDiagramm{
+        position: fixed;
+        justify-content: center;
+        border-style: solid;
+        background-color: #102542;
+        color: #f7fff7;
+        padding: 5%;
+        padding-top: 0%;
+        left: 50%;
+        top: 50%;
+        scroll-behavior: smooth;
+        transform: scale(80%);
+        transform: translate(-50%, -50%);
+    }
+
+    #diagramm{
+        width: fit-content;
+        transform: scale(80%);
     }
 }
 
