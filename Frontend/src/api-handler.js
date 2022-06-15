@@ -68,6 +68,7 @@ let weather = {
             var {icon, description} = data.hourly[displayTime].weather[0];
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.hourly[displayTime];
             var airQuality = currentAir.list[displayTime].main.aqi;
+            var wind_speedKMH = wind_speed * 3.6;
             this.airQualityText(airQuality);
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
@@ -82,13 +83,18 @@ let weather = {
             document.querySelector(".description").innerText = description;
             document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
             document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
-            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed.toFixed(1) + "kmh";
+            if(wind_speedKMH<10){
+                document.querySelector(".wind").innerText = "Windgeschwindigkeit: "+wind_speedKMH.toFixed(1)+" Km/h\u00A0\u00A0";
+            }else{
+                document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speedKMH.toFixed(1) + " Km/h";
+            }
             document.querySelector(".air-quality").innerText = "";
             document.querySelector(".air-qualityText").innerText = "Luftqualität: "+ airQuality +"("+this.airText+")";
         }else{
             var {icon, description} = data.current.weather[0];
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.current;
             var airQuality = currentAir.list[0].main.aqi;
+            var wind_speedKMH = wind_speed * 3.6;
             this.airQualityText(airQuality);
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
@@ -103,7 +109,11 @@ let weather = {
             document.querySelector(".description").innerText = description;
             document.querySelector(".uvi").innerText = "UV Index: "+ uvi.toFixed(2);
             document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
-            document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speed.toFixed(1) + "kmh";
+            if(wind_speedKMH<10){
+                document.querySelector(".wind").innerText = "Windgeschwindigkeit: "+wind_speedKMH.toFixed(1)+" Km/h\u00A0\u00A0";
+            }else{
+                document.querySelector(".wind").innerText = "Windgeschwindigkeit: " + wind_speedKMH.toFixed(1) + " Km/h";
+            }
             document.querySelector(".air-quality").innerText = "";
             document.querySelector(".air-qualityText").innerText = "Luftqualität: "+ airQuality +"("+this.airText+")";
         }
@@ -230,11 +240,72 @@ let weather = {
      * evaluates the if the air is fine, sends event if not
      */
     airEvaluation: function(){
-        if(currentAir.list[displayTime].main.aqi>3){
-            //event erstellen luft schlecht
+        for(var i=0; i<this.currentAir.list.length; i++){
+            switch(currentAir.list[i].main.aqi){
+                case 4:
+                    //send event schlecht
+                    break;
+                case 5:
+                    //send event sehr schlecht
+                    break;
+            }
+        }
+    },
+
+    weatherEvaluation: function(){
+        for(var i=0; i<this.currentWeather.hourly.length; i++){
+            
+            //Temperatur
+            if(this.currentWeather.hourly[i].temp>=37){
+                //send event zu hoch
+            }
+            if(this.currentWeather.hourly[i].temp<0){
+                if(this.currentWeather.hourly[i].temp<-3){
+                    if(this.currentWeather.hourly[i].temp<-10){
+                        //send event gefährlich tief
+                    }else{
+                        //send event definitiv frost
+                    }
+                    }else{
+                //send event vielleicht frost
+                }
+            }
+
+            //Windgeschwindigkeit
+            if(this.currentWeather.hourly[i].wind_speed>17){
+                if(this.currentWeather.hourly[i].wind_speed>20.7){
+                    if(this.currentWeather.hourly[i].wind_speed>24.4){
+                        if(this.currentWeather.hourly[i].wind_speed>28.4){
+                            if(this.currentWeather.hourly[i].wind_speed>32.6){
+                                //event orkan(12)
+                            }else{
+                                //event orkanartiger Sturm(11)
+                            }
+                        }else{
+                            //event schwerer Sturm(10)
+                        }
+                    }else{
+                        //event Sturm(9)
+                    }
+                }else{
+                    //event stürmischer Wind(8)
+                }
+            }else{
+                //event steifer Wind(7)
+            }
+            
+            //Sonnenstrahlung
+            if(this.currentWeather.hourly[i].uvi>=3&&this.currentWeather.hourly[i].uvi<8){
+                this.document.querySelector(".Warnungh2").innerText = "Warnung: Sonnenstrahlung hoch";
+                this.document.querySelector(".WarnungText").innerText = "Sonnenstrahlung ist zu hoch. Bitte verwenden Sie Sonnencreme wenn Sie das Haus verlassen.";
+                //event sonnenstrahlung hoch
+            }else if(this.currentWeather.hourly[i].uvi>=8){
+                this.document.querySelector(".Warnungh2").innerText = "Warnung: Sonnenstrahlung Extrem";
+                this.document.querySelector(".WarnungText").innerText = "Sonnenstrahlung ist zu extrem hoch. Sonnencreme allein reicht nicht um Sie ausgiebig zu schützen. Bitte meiden Sie die Sonne oder kleiden sich entsprechend.";
+                //event sonnenstrahlung extrem
+            }
         }
     }
-
 };
 
 let pollen = {
@@ -292,10 +363,13 @@ let pollen = {
     },
 
     pollenEvaluation: function() {
-        if(data[i].today.severity==2){
-            //event Pollenflug stärker
-            if(data[i].today.severity>3){
-
+        for(i=0;i<currentPollen.pollen.length;i++){
+            if(currentPollen.pollen[i].today.severity==2){
+                //Use makeAirQualityEvent() to create an event
+            }else{
+                if(currentPollen.pollen[i].today.severity>2){
+                    //Use makeAirQualityEvent() to create a severe pollen 
+                }
             }
         }
     }
