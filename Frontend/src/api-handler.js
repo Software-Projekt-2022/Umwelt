@@ -1,7 +1,7 @@
-
 let weather = {
     int: displayTime = 0,
     int: displayDay = 0,
+    int: displayWeek = 0,
     int: pollenDay=0,
     int: lat=52.289,
     int: lon=8.91,
@@ -11,14 +11,17 @@ let weather = {
     json: dailyWeather=null,
     json: currentPollen=null,
     json: currentRiver=null,
-    "apiKey": "60918bc5fea5594f5317de56f954851c",
+    josn: historyWeather=null,
+    "apiKey": "e0061af8aed641bc2d516594bff85d3b",
+    "lat": 52.28,
+    "lon": 8.91,
     /**
      * Fetches Airdata from openweathermap
      */
     fetchAir: function(){
 
         fetch(
-            "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat=52.28&lon=8.91&appid=60918bc5fea5594f5317de56f954851c"
+            "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.apiKey,
         )
             .then((response) => response.json())
             .then(data => currentAir = data)
@@ -39,25 +42,67 @@ let weather = {
     },
     
     /**
+     * Fetches historical weatherdata of the last 5 days from openweathermap
+     * 
+     */
+    fetchHistoryWeather: function() {
+        var day5, day4, day3, day2, day1;
+        day5=new Date();
+        day4=new Date();
+        day3=new Date();
+        day2=new Date();
+        day1=new Date();
+
+        day5.setDate(day5.getDate()-5);
+        day5=(day5.getTime()/1000).toFixed(0);
+
+        day4.setDate(day4.getDate()-4);
+        day4=(day4.getTime()/1000).toFixed(0);
+
+        day3.setDate(day3.getDate()-3);
+        day3=(day3.getTime()/1000).toFixed(0);
+
+        day2.setDate(day2.getDate()-2);
+        day2=(day2.getTime()/1000).toFixed(0);
+
+        day1.setDate(day1.getDate()-1);
+        day1=(day1.getTime()/1000).toFixed(0);
+
+        Promise.all([
+            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day5+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
+            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day4+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
+            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day3+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
+            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day2+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
+            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day1+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
+        ])
+        .then((value) => {
+            historyWeather = value;
+            console.log(historyWeather);
+        })
+        .catch(error => console.log(error));
+    },
+
+    /**
      * Fills the complete "Wetter in Cybercity" section with data
      * @param {JSON} data 
      */
     displayWeather: function(data){
         var weekday=new Array(14);
-        weekday[0]="Sonntag";
-        weekday[1]="Montag";
-        weekday[2]="Dienstag";
-        weekday[3]="Mittwoch";
-        weekday[4]="Donnerstag";
-        weekday[5]="Freitag";
-        weekday[6]="Samstag";
-        weekday[7]="Sonntag";
-        weekday[8]="Montag";
-        weekday[9]="Dienstag";
-        weekday[10]="Mittwoch";
-        weekday[11]="Donnerstag";
-        weekday[12]="Freitag";
-        weekday[13]="Samstag";
+        weekday[0]="So";
+        weekday[1]="Mo";
+        weekday[2]="Di";
+        weekday[3]="Mi";
+        weekday[4]="Do";
+        weekday[5]="Fr";
+        weekday[6]="Sa";
+        weekday[7]="So";
+        weekday[8]="Mo";
+        weekday[9]="Di";
+        weekday[10]="Mi";
+        weekday[11]="Do";
+        weekday[12]="Fr";
+        weekday[13]="Sa";
+
 
         /**
          * Displays the detailed weather and air data at a certain time depending on displayTime in a range of right now to +48 Hours  
@@ -152,35 +197,70 @@ let weather = {
         /**
          * displayes the weather for the next 5 days 
          */
-        var dtWeek = data.daily[0].dt;
-        millisecondsWeek = dtWeek * 1000;
-        var date = new Date(millisecondsWeek);
+        if(displayWeek==0){
+            var dtWeek = data.daily[0].dt;
+            millisecondsWeek = dtWeek * 1000;
+            var date = new Date(millisecondsWeek);
 
-        document.querySelector(".day1Name").innerText = weekday[date.getDay()+1];
-        document.querySelector(".day1Temp").innerText = data.daily[1].temp.day.toFixed(1) + "C";
-        document.querySelector(".day1TempNight").innerText = data.daily[1].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay1").src = "https://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon +".png";
+            document.getElementById("weekcardh2").innerText = "Nächste 5 Tage";
+            
+            document.querySelector(".day1Name").innerText = weekday[date.getDay()+1];
+            document.querySelector(".day1Temp").innerText = data.daily[1].temp.day.toFixed(1) + "C";
+            document.querySelector(".day1TempNight").innerText = data.daily[1].temp.night.toFixed(1) + "C";
+            document.querySelector(".iconDay1").src = "https://openweathermap.org/img/wn/" + data.daily[1].weather[0].icon +".png";
 
-        document.querySelector(".day2Name").innerText = weekday[date.getDay()+2];
-        document.querySelector(".day2Temp").innerText = data.daily[2].temp.day.toFixed(1) + "C";
-        document.querySelector(".day2TempNight").innerText = data.daily[2].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay2").src = "https://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon +".png";
+            document.querySelector(".day2Name").innerText = weekday[date.getDay()+2];
+            document.querySelector(".day2Temp").innerText = data.daily[2].temp.day.toFixed(1) + "C";
+            document.querySelector(".day2TempNight").innerText = data.daily[2].temp.night.toFixed(1) + "C";
+            document.querySelector(".iconDay2").src = "https://openweathermap.org/img/wn/" + data.daily[2].weather[0].icon +".png";
 
-        document.querySelector(".day3Name").innerText = weekday[date.getDay()+3];
-        document.querySelector(".day3Temp").innerText = data.daily[3].temp.day.toFixed(1) + "C";
-        document.querySelector(".day3TempNight").innerText = data.daily[3].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay3").src = "https://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon +".png";
+            document.querySelector(".day3Name").innerText = weekday[date.getDay()+3];
+            document.querySelector(".day3Temp").innerText = data.daily[3].temp.day.toFixed(1) + "C";
+            document.querySelector(".day3TempNight").innerText = data.daily[3].temp.night.toFixed(1) + "C";
+            document.querySelector(".iconDay3").src = "https://openweathermap.org/img/wn/" + data.daily[3].weather[0].icon +".png";
 
-        document.querySelector(".day4Name").innerText = weekday[date.getDay()+4];
-        document.querySelector(".day4Temp").innerText = data.daily[4].temp.day.toFixed(1) + "C";
-        document.querySelector(".day4TempNight").innerText = data.daily[4].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay4").src = "https://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon +".png";
+            document.querySelector(".day4Name").innerText = weekday[date.getDay()+4];
+            document.querySelector(".day4Temp").innerText = data.daily[4].temp.day.toFixed(1) + "C";
+            document.querySelector(".day4TempNight").innerText = data.daily[4].temp.night.toFixed(1) + "C";
+            document.querySelector(".iconDay4").src = "https://openweathermap.org/img/wn/" + data.daily[4].weather[0].icon +".png";
 
-        document.querySelector(".day5Name").innerText = weekday[date.getDay()+5];
-        document.querySelector(".day5Temp").innerText = data.daily[5].temp.day.toFixed(1) + "C";
-        document.querySelector(".day5TempNight").innerText = data.daily[5].temp.night.toFixed(1) + "C";
-        document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + data.daily[5].weather[0].icon +".png";
+            document.querySelector(".day5Name").innerText = weekday[date.getDay()+5];
+            document.querySelector(".day5Temp").innerText = data.daily[5].temp.day.toFixed(1) + "C";
+            document.querySelector(".day5TempNight").innerText = data.daily[5].temp.night.toFixed(1) + "C";
+            document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + data.daily[5].weather[0].icon +".png";
+        }else if(displayWeek==1){
+            var date = new Date();
+            date.setDate(date.getDate());
+            document.getElementById("weekcardh2").innerText = "Letzte 5 Tage";
+
+            document.querySelector(".day1Name").innerText = weekday[date.getDay()];
+            document.querySelector(".day1Temp").innerText = historyWeather[0].hourly[13].temp.toFixed(1) + "C";
+            document.querySelector(".day1TempNight").innerText = historyWeather[0].hourly[21].temp.toFixed(1) + "C";
+            document.querySelector(".iconDay1").src = "https://openweathermap.org/img/wn/" + historyWeather[0].hourly[13].weather[0].icon +".png";
+            
+            document.querySelector(".day2Name").innerText = weekday[date.getDay()+3];
+            document.querySelector(".day2Temp").innerText = historyWeather[1].hourly[13].temp.toFixed(1) + "C";
+            document.querySelector(".day2TempNight").innerText = historyWeather[1].hourly[21].temp.toFixed(1) + "C";
+            document.querySelector(".iconDay2").src = "https://openweathermap.org/img/wn/" + historyWeather[1].hourly[13].weather[0].icon +".png";
+
+            document.querySelector(".day3Name").innerText = weekday[date.getDay()+4];
+            document.querySelector(".day3Temp").innerText = historyWeather[2].hourly[13].temp.toFixed(1) + "C";
+            document.querySelector(".day3TempNight").innerText = historyWeather[2].hourly[21].temp.toFixed(1) + "C";
+            document.querySelector(".iconDay3").src = "https://openweathermap.org/img/wn/" + historyWeather[2].hourly[13].weather[0].icon +".png";
+
+            document.querySelector(".day4Name").innerText = weekday[date.getDay()+5];
+            document.querySelector(".day4Temp").innerText = historyWeather[3].hourly[13].temp.toFixed(1) + "C";
+            document.querySelector(".day4TempNight").innerText = historyWeather[3].hourly[21].temp.toFixed(1) + "C";
+            document.querySelector(".iconDay4").src = "https://openweathermap.org/img/wn/" + historyWeather[3].hourly[13].weather[0].icon +".png";
+
+            document.querySelector(".day5Name").innerText = weekday[date.getDay()+6];
+            document.querySelector(".day5Temp").innerText = historyWeather[4].hourly[13].temp.toFixed(1) + "C";
+            document.querySelector(".day5TempNight").innerText = historyWeather[4].hourly[23].temp.toFixed(1) + "C";
+            document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + historyWeather[4].hourly[13].weather[0].icon +".png";
+
+        }
     },
+
 
 
     previous: function() {
@@ -195,7 +275,7 @@ let weather = {
         if(displayTime<47){
             displayTime++;
         }
-        weather.fetchWeather(currentWeather)
+        weather.displayWeather(currentWeather)
     },
 
     previousWeek: function() {
@@ -209,9 +289,18 @@ let weather = {
         if(displayDay<6){
             displayDay++;
         }
-        weather.fetchWeather(currentWeather)
+        weather.displayWeather(currentWeather)
     },
-    
+    last5Days: function() {
+        displayWeek=1;
+        weather.displayWeather(currentWeather)
+    },
+
+    next5Days: function() {
+        displayWeek=0;
+        weather.displayWeather(currentWeather)
+    },
+
     /**
      * turns the air quality int into text
      * @param {int} quality 
@@ -449,6 +538,20 @@ let River = {
         document.querySelector(".last_weeks").innerText = 
         "Vor einer Woche: " +data[data.length-673].value + " cm  |  " +
         "Vor zwei Wochen: " + data[data.length-1345].value + " cm";
+    },
+
+    riverEvaluation: function() {
+        for(i=0;i<currentRiver.length;i++){
+            if(currentRiver[i].value>=350 && currentRiver[i].value<=435){
+                //create hochwasser event
+                document.querySelector(".warnungh2").innerText="Achtung Hochwasser!";
+                document.querySelector(".warnung").innerText="Der Wasserstand der Meser ist hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.";
+            }else if(currentRiver[i].value>=435){
+                //create extremhochwasser event
+                document.querySelector(".warnungh2").innerText="Achtung Extremes Hochwasser!";
+                document.querySelector(".warnung").innerText="Der Wasserstand der Meser ist extrem hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.";
+            }
+        }
     }
 };
 
@@ -480,7 +583,16 @@ document.getElementById("nextPollen").addEventListener("click",function(){
     pollen.nextPollen();
 });
 
+document.getElementById("last5Days").addEventListener("click",function(){
+    weather.last5Days();
+});
+
+document.getElementById("next5Days").addEventListener("click",function(){
+    weather.next5Days();
+});
+
 weather.fetchAir();
 weather.fetchWeather();
+weather.fetchHistoryWeather();
 pollen.fetchPollen();
 River.fetchRiver();
