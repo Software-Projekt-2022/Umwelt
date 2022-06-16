@@ -335,13 +335,16 @@ let weather = {
         var air=0;
         var pollen=0;
         var river=0;
-        for(var i=0; i<23; i++){
+        for(var i=0; i<11; i++){
             //Temperatur
             if(currentWeather.hourly[i].temp>=37){
                 //send event zu hoch
                 extremTemp=true;
                 temp=1;
             }else{
+                if(currentWeather.hourly[i].temp>26){
+                    temp=5;
+                }
                 extremTemp=false;
             }
             if(currentWeather.hourly[i].temp<0){
@@ -451,7 +454,7 @@ let weather = {
         switch(temp)
         {
             case 1:
-                warnings.push("Temperatur sehr Hoch! Bitte lassen Sie keine Lebewesen oder hitzeempfindliche Gegenstände im Auto und bleiben Sie Hydriert.");
+                warnings.push("Temperatur extrem Hoch! Bitte lassen Sie keine Lebewesen oder hitzeempfindliche Gegenstände im Auto und bleiben Sie Hydriert.");
                 break;
             case 2:
                 warnings.push("Sehr niedrige Temperaturen, Frost/Glätte und weitere gefahrungen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
@@ -462,6 +465,8 @@ let weather = {
             case 4:
                 warnings.push("Temperaturen um 0°C. Es könnte zu Glätte/Frost kommen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
                 break;
+            case 5:
+                warnings.push("Temperaturen von über 26°C. Bitte lassen Sie keine Lebewesen oder hitzeempfindliche Gegenstände im Auto und bleiben Sie Hydriert.")
         }
 
         switch(wind)
@@ -527,7 +532,7 @@ let weather = {
                 document.querySelector(".WarnungText").innerText += warnings[i]+"\n";
             }
         }else{
-            document.querySelector(".WarnungText").innerText = "Aktuell keine Warnungen";
+            document.querySelector(".WarnungText").innerHTML = "";
         }
         console.log(warnings);
         console.log(temp,uv,wind,air,pollen,river);
@@ -671,10 +676,6 @@ let River = {
     }
 
 };
-
-let evaluation = {
-    
-}
 
 
 /**
