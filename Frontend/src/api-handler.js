@@ -5,6 +5,11 @@ let weather = {
     int: pollenDay=0,
     int: lat=52.289,
     int: lon=8.91,
+    boolean: hochwasser=false,
+    boolean: extremTemp=false,
+    boolean: extremWind=false,
+    boolean: extremPollen=false,
+    boolean: extremUV=false,
     var: airText="",
     json: currentAir=null,
     json: currentWeather=null,
@@ -25,7 +30,6 @@ let weather = {
         )
             .then((response) => response.json())
             .then(data => currentAir = data)
-            
     },
 
     /**
@@ -38,7 +42,8 @@ let weather = {
         )
             .then((response) => response.json())
             .then(data => currentWeather = data)
-            .then((currentWeather) => this.displayWeather(currentWeather))
+            .then(() => this.displayWeather(currentWeather))
+        
     },
     
     /**
@@ -102,8 +107,6 @@ let weather = {
         weekday[11]="Do";
         weekday[12]="Fr";
         weekday[13]="Sa";
-
-
         /**
          * Displays the detailed weather and air data at a certain time depending on displayTime in a range of right now to +48 Hours  
          */
@@ -258,10 +261,9 @@ let weather = {
             document.querySelector(".day5TempNight").innerText = historyWeather[4].hourly[23].temp.toFixed(1) + "C";
             document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + historyWeather[4].hourly[13].weather[0].icon +".png";
 
-        }
+        }    
+    weather.evaluateData();
     },
-
-
 
     previous: function() {
         if(displayTime>0){
@@ -324,78 +326,216 @@ let weather = {
                 break;
         }
     },
-
-    /**
-     * evaluates the if the air is fine, sends event if not
-     */
-    airEvaluation: function(){
-        for(var i=0; i<this.currentAir.list.length; i++){
-            switch(currentAir.list[i].main.aqi){
-                case 4:
-                    //send event schlecht
-                    break;
-                case 5:
-                    //send event sehr schlecht
-                    break;
-            }
-        }
-    },
-
-    weatherEvaluation: function(){
-        for(var i=0; i<this.currentWeather.hourly.length; i++){
-            
+    
+    evaluateData: function(){
+        var warnings = [];
+        var uv=0;
+        var wind=0;
+        var temp=0;
+        var air=0;
+        var pollen=0;
+        var river=0;
+        for(var i=0; i<23; i++){
             //Temperatur
-            if(this.currentWeather.hourly[i].temp>=37){
+            if(currentWeather.hourly[i].temp>=37){
                 //send event zu hoch
+                extremTemp=true;
+                temp=1;
+            }else{
+                extremTemp=false;
             }
-            if(this.currentWeather.hourly[i].temp<0){
-                if(this.currentWeather.hourly[i].temp<-3){
-                    if(this.currentWeather.hourly[i].temp<-10){
+            if(currentWeather.hourly[i].temp<0){
+                if(currentWeather.hourly[i].temp<-5){
+                    if(currentWeather.hourly[i].temp<-10){
                         //send event gefährlich tief
+                        extremTemp=true;
+                        temp=3;
                     }else{
                         //send event definitiv frost
+                        extremTemp=true;
+                        temp=2;
                     }
                     }else{
                 //send event vielleicht frost
+                temp=4;
                 }
+            }else{
+                extremTemp=false;
             }
 
             //Windgeschwindigkeit
-            if(this.currentWeather.hourly[i].wind_speed>17){
-                if(this.currentWeather.hourly[i].wind_speed>20.7){
-                    if(this.currentWeather.hourly[i].wind_speed>24.4){
-                        if(this.currentWeather.hourly[i].wind_speed>28.4){
-                            if(this.currentWeather.hourly[i].wind_speed>32.6){
+            if(currentWeather.hourly[i].wind_speed>17){
+                if(currentWeather.hourly[i].wind_speed>20.7){
+                    if(currentWeather.hourly[i].wind_speed>24.4){
+                        if(currentWeather.hourly[i].wind_speed>28.4){
+                            if(currentWeather.hourly[i].wind_speed>32.6){
                                 //event orkan(12)
+                                extremWind=true;
+                                wind=12;
                             }else{
                                 //event orkanartiger Sturm(11)
+                                extremWind=true;
+                                wind=11;
                             }
                         }else{
                             //event schwerer Sturm(10)
+                            extremWind=true;
+                            wind=10;
                         }
                     }else{
                         //event Sturm(9)
+                        extremWind=true;
+                        wind=9;
                     }
                 }else{
                     //event stürmischer Wind(8)
+                    extremWind=true;
+                    wind=8;
                 }
-            }else{
+            }else if(currentWeather.hourly[i].wind_speed>13.9){
                 //event steifer Wind(7)
+                wind=7;
+            }
+            if(currentWeather.hourly[i].wind_speed<17){
+                extremWind=false;
             }
             
             //Sonnenstrahlung
-            if(this.currentWeather.hourly[i].uvi>=3&&this.currentWeather.hourly[i].uvi<8){
-                this.document.querySelector(".Warnungh2").innerText = "Warnung: Sonnenstrahlung hoch";
-                this.document.querySelector(".WarnungText").innerText = "Sonnenstrahlung ist zu hoch. Bitte verwenden Sie Sonnencreme wenn Sie das Haus verlassen.";
+            if(currentWeather.hourly[i].uvi>=3&&currentWeather.hourly[i].uvi<8){
+                extremUV=true;
+                uv=1;
                 //event sonnenstrahlung hoch
-            }else if(this.currentWeather.hourly[i].uvi>=8){
-                this.document.querySelector(".Warnungh2").innerText = "Warnung: Sonnenstrahlung Extrem";
-                this.document.querySelector(".WarnungText").innerText = "Sonnenstrahlung ist zu extrem hoch. Sonnencreme allein reicht nicht um Sie ausgiebig zu schützen. Bitte meiden Sie die Sonne oder kleiden sich entsprechend.";
+            }else if(currentWeather.hourly[i].uvi>=8){
+                extremUV=true;
+                uv=2;
                 //event sonnenstrahlung extrem
             }
         }
+
+        //Luftqualität
+        for(var i=0; i<currentAir.list.length; i++){
+            switch(currentAir.list[i].main.aqi){
+                case 4:
+                    //send event schlecht
+                    air=1;
+                    break;
+                case 5:
+                    //send event sehr schlecht
+                    air=2;
+                    break;
+            }
+        }
+
+        //Pollen
+        if(currentPollen.pollen[0].today.severity==2){
+            //Use makeAirQualityEvent() to create an event
+            pollen=1;
+        }else{
+            if(currentPollen.pollen[0].today.severity>2){
+                //Use makeAirQualityEvent() to create a severe pollen
+                pollen=2;
+            }
+        }
+
+        //River
+        for(i=0;i<96;i++){
+            if(currentRiver[i].value>=350 && currentRiver[i].value<=435){
+                //create hochwasser event
+                river=1;
+            }else if(currentRiver[i].value>=435){
+                //create extremhochwasser event
+                river=2;
+                }
+        }
+        //Build warning
+        switch(temp)
+        {
+            case 1:
+                warnings.push("Temperatur sehr Hoch! Bitte lassen Sie keine Lebewesen oder hitzeempfindliche Gegenstände im Auto und bleiben Sie Hydriert.");
+                break;
+            case 2:
+                warnings.push("Sehr niedrige Temperaturen, Frost/Glätte und weitere gefahrungen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 3:
+                warnings.push("Niedrige Temperaturen, Frost/Glätte. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 4:
+                warnings.push("Temperaturen um 0°C. Es könnte zu Glätte/Frost kommen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+        }
+
+        switch(wind)
+        {
+            case 8:
+                warnings.push("Windstärke 8. Es könnten z.B. Äste von Bäumen abbrechen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 9:
+                warnings.push("Windstärke 9. Es könnte z.B. zu schäden an Häusern kommen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 10:
+                warnings.push("Windstärke 10, schwerer Sturm. Es könnten z.B. Bäume entwurzeln. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 11:
+                warnings.push("Windstärke 11, Orkanartiger Sturm. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 12:
+                warnings.push("Windstärke 12, Orkan. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+        }
+        switch(uv)
+        {
+            case 1:
+                warnings.push("UV-Strahlung erhöht. Bitte benutzen Sie Sonnencreme.");
+                break;
+            case 2:
+                warnings.push("UV-Strahlung extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen, Sonnencreme reicht nicht aus!");
+                break;
+        }
+        switch(air)
+        {
+            case 1:
+                warnings.push("Luftqualität zeitweise schlecht.");
+                break;
+            case 2:
+                warnings.push("Luftqualität zeitweise sehr schlecht.");
+                break;
+        }
+        switch(pollen)
+        {
+            case 1:
+                warnings.push("Pollen sehr hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+            case 2:
+                warnings.push("Pollen extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                break;
+        }
+        switch(river)
+        {
+            case 1:
+                warnings.push("Der Wasserstand der Meser ist heute hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.");
+                break;
+            case 2:
+                warnings.push("Der Wasserstand der Meser ist heute extrem hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.");
+                break;
+        }
+        
+        if(warnings.length>0){
+            document.querySelector(".warnungh2").innerText = "Warnungen:";
+            document.querySelector(".warning").style.display = "block";
+            document.querySelector(".WarnungText").innerHTML = "";
+            for(var i=0;i<warnings.length;i++){
+                document.querySelector(".WarnungText").innerText += warnings[i]+"\n";
+            }
+        }else{
+            document.querySelector(".WarnungText").innerText = "Aktuell keine Warnungen";
+        }
+        console.log(warnings);
+        console.log(temp,uv,wind,air,pollen,river);
+
+        //Auswertung aktivitäten
     }
-};
+
+}
 
 let pollen = {
 
@@ -451,17 +591,7 @@ let pollen = {
         pollen.displayPollen(currentPollen)
     },
 
-    pollenEvaluation: function() {
-        for(i=0;i<currentPollen.pollen.length;i++){
-            if(currentPollen.pollen[i].today.severity==2){
-                //Use makeAirQualityEvent() to create an event
-            }else{
-                if(currentPollen.pollen[i].today.severity>2){
-                    //Use makeAirQualityEvent() to create a severe pollen 
-                }
-            }
-        }
-    }
+    
 }
 
 let River = {
@@ -538,22 +668,13 @@ let River = {
         document.querySelector(".last_weeks").innerText = 
         "Vor einer Woche: " +data[data.length-673].value + " cm  |  " +
         "Vor zwei Wochen: " + data[data.length-1345].value + " cm";
-    },
-
-    riverEvaluation: function() {
-        for(i=0;i<currentRiver.length;i++){
-            if(currentRiver[i].value>=350 && currentRiver[i].value<=435){
-                //create hochwasser event
-                document.querySelector(".warnungh2").innerText="Achtung Hochwasser!";
-                document.querySelector(".warnung").innerText="Der Wasserstand der Meser ist hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.";
-            }else if(currentRiver[i].value>=435){
-                //create extremhochwasser event
-                document.querySelector(".warnungh2").innerText="Achtung Extremes Hochwasser!";
-                document.querySelector(".warnung").innerText="Der Wasserstand der Meser ist extrem hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.";
-            }
-        }
     }
+
 };
+
+let evaluation = {
+    
+}
 
 
 /**
@@ -589,6 +710,7 @@ document.getElementById("last5Days").addEventListener("click",function(){
 
 document.getElementById("next5Days").addEventListener("click",function(){
     weather.next5Days();
+    weather.evaluateData();
 });
 
 weather.fetchAir();
