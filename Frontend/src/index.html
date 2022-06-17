@@ -10,9 +10,11 @@
 <body>
     <div class = "main">
         <div class = "element left">
-            <h2>Wetter in CyberCity</h2>
+            <h2>
+            <a href="http://cyber-city.systems/" id="link">Wetter in CyberCity</a>
+            </h2>
             <div class="now">
-                <ul style="list-style: none; padding-left: 0px;">
+                <ul style="list-style: none; padding-left: 0px; margin-bottom: 1%;">
                     <li>
                         <div class="buttonLeft btn">
                             <button id = "previous">
@@ -69,8 +71,13 @@
 
             <div class = "weatherWeek">
                 <div class = "weekCard boxLeft">
-                    <h2>5 Tage übersicht</h2>
+                    <h2 id="weekcardh2">5 Tage übersicht</h2>
                     <ul style="list-style: none;" id="week">
+                        <li>
+                            <button id="last5Days">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="6em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22" transform="matrix(-1 0 0 1 24 0)"></polygon></svg>
+                            </button>
+                        </li>
                         <li>
                             <div class = "day1Name"></div>
                             <div class = "day1Temp"></div>
@@ -105,12 +112,17 @@
                             <div class = "day5TempNight"></div>
                             <img src="" alt="" class="iconDay5"/>
                         </li>
+                        <li>
+                            <button id="next5Days">
+                                <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" height="6em" width="1em" xmlns="http://www.w3.org/2000/svg"><polygon fill="none" stroke="#000" stroke-width="2" points="6 2 18 12 6 22"></polygon></svg>
+                            </button>
+                        </li>
                     </ul>
                 </div>
             </div>
             <div class = "warning">
-                <h2 class="warnungh2">ACHTUNG HOCHWASSER</h2>
-                <div class="Warnung Text">Der stand der Meser wird in den folgenden Tagen stark steigen, bitte beachten sie die Hinweise der Feuerwehr!</div>
+                <h2 class="warnungh2">Warnungen</h2>
+                <div class="WarnungText"></div>
             </div>
         </div>
 
