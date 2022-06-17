@@ -260,7 +260,6 @@ let weather = {
             document.querySelector(".day5Temp").innerText = historyWeather[4].hourly[13].temp.toFixed(1) + "C";
             document.querySelector(".day5TempNight").innerText = historyWeather[4].hourly[23].temp.toFixed(1) + "C";
             document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + historyWeather[4].hourly[13].weather[0].icon +".png";
-
         }    
     weather.evaluateData();
     },
@@ -490,10 +489,10 @@ let weather = {
         switch(uv)
         {
             case 1:
-                warnings.push("UV-Strahlung erhöht. Bitte benutzen Sie Sonnencreme.");
+                warnings.push("UV-Strahlung heute erhöht. Bitte benutzen Sie Sonnencreme.");
                 break;
             case 2:
-                warnings.push("UV-Strahlung extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen, Sonnencreme reicht nicht aus!");
+                warnings.push("UV-Strahlung heute extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen, Sonnencreme reicht nicht aus!");
                 break;
         }
         switch(air)
