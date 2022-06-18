@@ -26,7 +26,7 @@ let weather = {
     fetchAir: function(){
 
         fetch(
-            "http://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.apiKey,
+            "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.apiKey,
         )
             .then((response) => response.json())
             .then(data => currentAir = data)
