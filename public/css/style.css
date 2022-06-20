@@ -32,7 +32,7 @@ div.element h2{
 
 div.left {
     float: left;
-    transform: scale(85%);
+    transform: scale(75%);
     transform-origin: 0 0;
 }
 
