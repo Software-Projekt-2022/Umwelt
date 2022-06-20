@@ -1,4 +1,11 @@
+/*
+fetching auslagern, evaluation und display import
+import eventService from "/events/eventService";
+import event_factory from "/events/event_factory";
+*/
+//import evaluation from "/js/api/evaluation.js";
 let weather = {
+    
     int: displayTime = 0,
     int: displayDay = 0,
     int: displayWeek = 0,
@@ -261,7 +268,8 @@ let weather = {
             document.querySelector(".day5TempNight").innerText = historyWeather[4].hourly[23].temp.toFixed(1) + "C";
             document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + historyWeather[4].hourly[13].weather[0].icon +".png";
         }    
-    weather.evaluateData();
+        //eventService.sendEvent(event_factory.adminMessageBroadcastEvent("weather"));
+        return(data);
     },
 
     previous: function() {
@@ -718,3 +726,6 @@ weather.fetchWeather();
 weather.fetchHistoryWeather();
 pollen.fetchPollen();
 River.fetchRiver();
+
+//weather.evaluateData(evaluation.evaluateWeather(currentWeather),evaluation.evaluateAir(currentAir), evaluation.evaluateHistoryWeather(currentHistoryWeather), 
+//evaluation.evaluatePollen(currentPollen), evaluation.evaluateRiver(currentRiver));
