@@ -16,7 +16,6 @@ exports.evaluateWeather=async function(){
     var timeStampWind = [];
     var timeStampUV = [];
     var ct=0;
-    eventService.sendEvent(event_factory.adminMessageBroadcastEvent("Evaluating weather"));
     //Temperatur
     for(var i=0; i<5; i++){
         if(currentWeather.hourly[i].temp>=37){
