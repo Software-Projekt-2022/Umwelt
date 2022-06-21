@@ -5,11 +5,6 @@ let weather = {
     int: pollenDay=0,
     int: lat=52.289,
     int: lon=8.91,
-    boolean: hochwasser=false,
-    boolean: extremTemp=false,
-    boolean: extremWind=false,
-    boolean: extremPollen=false,
-    boolean: extremUV=false,
     var: airText="",
 
     /**
@@ -25,8 +20,7 @@ let weather = {
      * Fetches API data from server, splits it and calls displayDailyEvent if an event is in the JSON
      */
     getData: async function(){
-        const data = await weather.fetchJson(); 
-        console.log(data);
+        const data = await weather.fetchJson();
         currentAir = data.air;
         currentWeather = data.weather;
         currentPollen = data.pollen;
@@ -43,7 +37,7 @@ let weather = {
 
     /**
      * Fills the complete "Wetter in Cybercity" section with data
-     * @param {JSON} data 
+     * @param {JSON} data weatherdata from openweathermap
      */
     displayWeather: function(data){
         var weekday=new Array(14);
@@ -71,6 +65,7 @@ let weather = {
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.hourly[displayTime];
             var airQuality = currentAir.list[displayTime].main.aqi;
             var wind_speedKMH = wind_speed * 3.6;
+            var wind_gustKMH = data.hourly[displayTime].wind_gust * 3.6;
             this.airQualityText(airQuality);
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
@@ -80,7 +75,7 @@ let weather = {
             document.querySelector(".dt").innerText = "Um " + timeSplit[1] +" Uhr";
             document.querySelector(".temperaturNow").innerText ="Temperatur: " + temp.toFixed(1) + " °C";
             document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like.toFixed(1) + " °C";
-            document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[date.getDay()].temp.night.toFixed(1) + " °C";
+            document.querySelector(".windGust").innerText = "Windböhen <= " + wind_gustKMH.toFixed(1) + " km/h";
             document.querySelector(".iconNow").src = "https://openweathermap.org/img/wn/" + icon +".png";
             document.querySelector(".description").innerText = description;
             document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
@@ -97,6 +92,7 @@ let weather = {
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.current;
             var airQuality = currentAir.list[0].main.aqi;
             var wind_speedKMH = wind_speed * 3.6;
+            var wind_gustKMH = data.hourly[0].wind_gust * 3.6;
             this.airQualityText(airQuality);
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
@@ -119,7 +115,7 @@ let weather = {
             document.querySelector(".dt").innerText = "Um " + LiveHours +":"+LiveMinutes +":00 Uhr";
             document.querySelector(".temperaturNow").innerText ="Temperatur: " + temp.toFixed(1) + " °C";
             document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like.toFixed(1) + " °C";
-            document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[0].temp.night.toFixed(1) + " °C";
+            document.querySelector(".windGust").innerText = "Windböhen <= " + wind_gustKMH.toFixed(1) + " km/h";
             document.querySelector(".iconNow").src = "https://openweathermap.org/img/wn/" + icon +".png";
             document.querySelector(".description").innerText = description;
             document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
