@@ -1,11 +1,14 @@
-const constants = require('./event_constants');
+var microservice_name= 'microservice.umwelt';
+var microservice_prefix='UMW-';
+var microservice_exchange= 'publish_event.umwelt';
+var microservice_queue= 'microservice.umwelt';
 
 function wrapper(event_type)
 {
     return {
-        event_id: constants.microservice_prefix + Date.now(),
+        event_id: microservice_prefix + Date.now(),
         event_type: event_type,
-        event_origin: constants.microservice_name,
+        event_origin: microservice_name,
         event_time: new Date().toISOString(),
         content: {}
     };
@@ -35,5 +38,6 @@ function airQualityWarningEvent(msg, type, level)
         pollution_level: level
     });
 }
-module.exports.airQualityWarningEvent = airQualityWarningEvent;
+
 module.exports.adminMessageBroadcastEvent = adminMessageBroadcastEvent;
+module.exports.airQualityWarningEvent = airQualityWarningEvent;

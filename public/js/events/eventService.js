@@ -1,5 +1,10 @@
+var microservice_name= 'microservice.umwelt';
+var microservice_prefix='UMW-';
+var microservice_exchange= 'publish_event.umwelt';
+var microservice_queue= 'microservice.umwelt';
+
+
 const amqp = require('amqplib/callback_api');
-const constants = require('./event_constants');
 
 //Verbindung und Channel für Message Bus
 var amqp_connection=null;
@@ -54,7 +59,7 @@ function sendEvent(event)
         //Send event function
         const send = () =>
         {
-            amqp_channel.publish(constants.microservice_exchange, event.event_type, Buffer.from(msg));
+            amqp_channel.publish(microservice_exchange, event.event_type, Buffer.from(msg));
             console.log('Event sent %s: %s',event.event_type, msg);
             resolve();
         };
@@ -78,5 +83,7 @@ function sendEvent(event)
 }
 
 module.exports.sendEvent = sendEvent;
+
+
 
     
