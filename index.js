@@ -21,7 +21,7 @@ app.get('/Umwelt', function(req, res){
 
 //Start server
 console.log('Server started on port ' + process.env.port);
-app.listen(process.env.port, process.env.adress);
+app.listen(process.env.port, process.env.address);
 
 //Routine refreshing every 60 minutes and evalutating at 8 and 20 o' clock
 serverTools.startUp(app);

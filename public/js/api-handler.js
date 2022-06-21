@@ -29,7 +29,7 @@ let weather = {
         weather.displayWeather(data.weather);
         pollen.displayPollen(data.pollen);
         River.displayRiver(data.river);
-        //weather.evaluateData(data.warnings);
+        weather.evaluateData(data.warnings);
         if(data.events.content != null){
             dailyEvents.displayDailyEvent(data.events);
         }
