@@ -18,33 +18,34 @@ exports.startUp = async function(app) {
     airData=await fetching.fetchAir();
     riverData=await fetching.fetchRiver();
     pollenData=await fetching.fetchPollen();
-    
-    warnings.push(await evaluation.evaluateWeather(weatherData));
-    warnings.push(await evaluation.evaluateAir(airData));
-    warnings.push(await evaluation.evaluateRiver(riverData));
-    warnings.push(await evaluation.evaluatePollen(pollenData));
+    if(checkData()){
+        warnings.push(await evaluation.evaluateWeather(weatherData));
+        warnings.push(await evaluation.evaluateAir(airData));
+        warnings.push(await evaluation.evaluateRiver(riverData));
+        warnings.push(await evaluation.evaluatePollen(pollenData));
 
-    allData = {
-        "weather": weatherData,
-        "historicalWeather": histoData,
-        "air": airData,
-        "river": riverData,
-        "pollen": pollenData,
-        "warnings": warnings,
-        "events": {
-            "content": {
-                "title": "Event 1",
-                "description": "Event 1 description",
-                "time_start": "2022-05-13T12:00:00.000Z",
-                "time_end": "2022-05-13T14:00:00.000Z",
-                "address": "Event 1 address",
-            },
+        allData = {
+            "weather": weatherData,
+            "historicalWeather": histoData,
+            "air": airData,
+            "river": riverData,
+            "pollen": pollenData,
+            "warnings": warnings,
+            "events": {
+                "content": {
+                    "title": "Event 1",
+                    "description": "Event 1 description",
+                    "time_start": "2022-05-13T12:00:00.000Z",
+                    "time_end": "2022-05-13T14:00:00.000Z",
+                    "address": "Event 1 address",
+                },
+            }
         }
-    }
 
-    app.get('/api/getAllData', async(req, res) => {
-        res.send(allData)
-    });
+        app.get('/api/getAllData', async(req, res) => {
+            res.send(allData)
+        });
+    }
 }
 
 /**
@@ -79,4 +80,24 @@ exports.refreshData = async function(app) {
     app.get('/api/getAllData', async(req, res) => {
         res.send(allData)
     });
+}
+
+function checkData(){
+    pass = true;
+    if(!this.weatherData.current){
+        return false;
+    }
+    if(!this.histoData[0].hourly[13].temp){
+        return false;
+    }
+    if(!this.airData.list[0].main.aqi){
+        return false;
+    }
+    if(!this.riverData[0].value){
+        return false;
+    }
+    if(!this.pollenData[0].today.description){
+        return false;
+    }
+    return true;
 }
