@@ -1,6 +1,6 @@
 FROM node:alpine
 
-ENV adress="https://umwelt.cyber-city.systems/api"
+ENV adress="localhost"
 ENV port="8080"
 ENV RABBITMQ_HOST="rabbitmq"
 ENV RABBITMQ_PORT="5672"
