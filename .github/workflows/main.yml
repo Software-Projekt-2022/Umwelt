@@ -12,18 +12,19 @@ on:
 #2https://registry.digitalocean.com/cybercityregistry/umwelt
 env:
   REGISTRY: "registry.digitalocean.com/cybercityregistry"
-  IMAGE_NAME: "umwelt:latest"
+  IMAGE_NAME_FR: "umwelt_fr:latest"
+  IMAGE_NAME_BA: "umwelt_ba:latest"
 
 #3
 jobs:
-  build_and_push:
+  build_and_push_frontend:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout to repo
         uses: actions/checkout@v2
 
       - name: Build container image
-        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME) .
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME_FR) ./public/
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -33,12 +34,28 @@ jobs:
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login --expiry-seconds 600
 
-      - name: Remove all old images
-        run: if [ ! - z "(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
+      - name: Push image to DigitalOcean Container Registry
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME_FR)
+
+  build_and_push_backend:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout to repo
+        uses: actions/checkout@v2
+
+      - name: Build container image
+        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME_BA) .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_ACCESS }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME)
-
+        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME_BA)
   deploy:
     runs-on: ubuntu-20.04
     needs: build_and_push
@@ -52,7 +69,7 @@ jobs:
           username: ${{ secrets.SSH_USER}}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          envs: IMAGE_NAME,REGISTRY,{{ secrets.DO_ACCESS }},GITHUB_SHA
+          envs: REGISTRY,{{ secrets.DO_ACCESS }},GITHUB_SHA
           script: |
             # Stop docker
             docker-compose stop
