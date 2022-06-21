@@ -1,6 +1,6 @@
 const express = require('express')
 const path = require('path');
-const serverTools = require('./Public/js/api/serverTools.js');
+const serverTools = require('./public/js/api/serverTools.js');
 const app = express();
 
 //Routes
