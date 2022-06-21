@@ -18,19 +18,19 @@ exports.startUp = async function(app) {
     airData=await fetching.fetchAir();
     riverData=await fetching.fetchRiver();
     pollenData=await fetching.fetchPollen();
-    
+    /*
     warnings.push(await evaluation.evaluateWeather(weatherData));
     warnings.push(await evaluation.evaluateAir(airData));
     warnings.push(await evaluation.evaluateRiver(riverData));
     warnings.push(await evaluation.evaluatePollen(pollenData));
-
+    */
     allData = {
         "weather": weatherData,
         "historicalWeather": histoData,
         "air": airData,
         "river": riverData,
-        "pollen": pollenData,
-        "warnings": warnings
+        "pollen": pollenData
+       //"warnings": warnings
     }
 
     app.get('/api/getAllData', async(req, res) => {
@@ -54,8 +54,8 @@ exports.refreshData = async function(app) {
         "historicalWeather": histoData,
         "air": airData,
         "river": riverData,
-        "pollen": pollenData,
-        "warnings": warnings
+        "pollen": pollenData
+        //"warnings": warnings
     }
 
     app.get('/api/getAllData', async(req, res) => {
