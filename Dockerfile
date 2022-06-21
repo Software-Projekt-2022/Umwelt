@@ -5,6 +5,6 @@ ENV port="8080"
 ENV RABBITMQ_HOST="rabbitmq"
 ENV RABBITMQ_PORT="5672"
 
-COPY Frontend/src/ /usr/share/nginx/html
+COPY public/ /usr/share/nginx/html
 
 EXPOSE 80
