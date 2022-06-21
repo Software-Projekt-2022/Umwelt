@@ -7,7 +7,6 @@ var airData;
 var riverData;
 var pollenData;
 var allData = {};
-}
 /**
  * This function is called when the server starts up/resets. It fetches the data, sends it to the frontend and evaluates it.
  * @param {*} app 
