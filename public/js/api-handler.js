@@ -17,7 +17,7 @@ let weather = {
      * @returns 
      */
     fetchJson: async url=> {
-        const response = await fetch('/getAllData');
+        const response = await fetch('/api/getAllData');
         return response.json();
     },
     

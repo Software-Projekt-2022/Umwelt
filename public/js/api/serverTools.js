@@ -1,24 +1,30 @@
 const fetching = require('./fetching');
 const evaluation = require('./evaluation');
 var warnings=[];
+var weatherData;
+var histoData;
+var airData;
+var riverData;
+var pollenData;
+var allData = {};
 
 /**
  * This function is called when the server starts up/resets. It fetches the data, sends it to the frontend and evaluates it.
  * @param {*} app 
  */
 exports.startUp = async function(app) {
-    const weatherData=await fetching.fetchWeather();
-    const histoData=await fetching.fetchHistoricalWeather();
-    const airData=await fetching.fetchAir();
-    const riverData=await fetching.fetchRiver();
-    const pollenData=await fetching.fetchPollen();
+    weatherData=await fetching.fetchWeather();
+    histoData=await fetching.fetchHistoricalWeather();
+    airData=await fetching.fetchAir();
+    riverData=await fetching.fetchRiver();
+    pollenData=await fetching.fetchPollen();
     
     warnings.push(await evaluation.evaluateWeather(weatherData));
     warnings.push(await evaluation.evaluateAir(airData));
     warnings.push(await evaluation.evaluateRiver(riverData));
     warnings.push(await evaluation.evaluatePollen(pollenData));
 
-    const allData = {
+    allData = {
         "weather": weatherData,
         "historicalWeather": histoData,
         "air": airData,
@@ -36,7 +42,7 @@ exports.startUp = async function(app) {
         }
     }
 
-    app.get('/getAllData', async(req, res) => {
+    app.get('/api/getAllData', async(req, res) => {
         res.send(allData)
     });
 }
@@ -46,13 +52,13 @@ exports.startUp = async function(app) {
  * @param {*} app 
  */
 exports.refreshData = async function(app) {
-    const weatherData=await fetching.fetchWeather();
-    const histoData=await fetching.fetchHistoricalWeather();
-    const airData=await fetching.fetchAir();
-    const riverData=await fetching.fetchRiver();
-    const pollenData=await fetching.fetchPollen();
+    weatherData=await fetching.fetchWeather();
+    histoData=await fetching.fetchHistoricalWeather();
+    airData=await fetching.fetchAir();
+    riverData=await fetching.fetchRiver();
+    pollenData=await fetching.fetchPollen();
 
-    const allData = {
+    allData = {
         "weather": weatherData,
         "historicalWeather": histoData,
         "air": airData,
@@ -61,7 +67,7 @@ exports.refreshData = async function(app) {
         "warnings": warnings,
         "events": {
             content: {
-                "title": "Event 1",
+                "title": "Event 12",
                 "description": "Event 1 description",
                 "time_start": "2022-05-13T12:00:00.000Z",
                 "time_end": "2022-05-13T14:00:00.000Z",
@@ -70,7 +76,7 @@ exports.refreshData = async function(app) {
         }
     }
 
-    app.get('/getAllData', async(req, res) => {
+    app.get('/api/getAllData', async(req, res) => {
         res.send(allData)
     });
 }
