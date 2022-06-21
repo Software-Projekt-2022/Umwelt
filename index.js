@@ -12,7 +12,7 @@ app.use('/fonts',express.static(path.join(__dirname, 'public/css/fonts')));
 app.use('/js',express.static(path.join(__dirname, 'public/js')));
 app.use('/events',express.static(path.join(__dirname, 'public/js/events')));
 app.use('/fetchData' ,express.static(path.join(__dirname, 'public/js/fetchData.js')));
-app.use('/riverDiagramm.html',express.static(path.join(__dirname, 'public/riverDiagramm.html')));
+app.use('/meserdetails.html',express.static(path.join(__dirname, 'public/meserdetails.html'),{index:false,extensions:['html']}));
 
 //Display html
 app.get('/Umwelt', function(req, res){
