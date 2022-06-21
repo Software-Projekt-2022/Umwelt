@@ -1,11 +1,4 @@
-/*
-fetching auslagern, evaluation und display import
-import eventService from "/events/eventService";
-import event_factory from "/events/event_factory";
-*/
-//import evaluation from "/js/api/evaluation.js";
-let weather = {
-    
+let weather = {  
     int: displayTime = 0,
     int: displayDay = 0,
     int: displayWeek = 0,
@@ -18,80 +11,34 @@ let weather = {
     boolean: extremPollen=false,
     boolean: extremUV=false,
     var: airText="",
-    json: currentAir=null,
-    json: currentWeather=null,
-    json: dailyWeather=null,
-    json: currentPollen=null,
-    json: currentRiver=null,
-    josn: historyWeather=null,
-    "apiKey": "e0061af8aed641bc2d516594bff85d3b",
-    "lat": 52.28,
-    "lon": 8.91,
-    /**
-     * Fetches Airdata from openweathermap
-     */
-    fetchAir: function(){
-
-        fetch(
-            "https://api.openweathermap.org/data/2.5/air_pollution/forecast?lat="+this.lat+"&lon="+this.lon+"&appid="+this.apiKey,
-        )
-            .then((response) => response.json())
-            .then(data => currentAir = data)
-    },
 
     /**
-     * Fetches weatherdata from openweathermap
+     * Fetches JSON from server
+     * @returns 
      */
-    fetchWeather: function() {
-
-        fetch(
-            "https://api.openweathermap.org/data/2.5/onecall?lat=52.28953&lon=8.91455&exclude=minutely&appid="+this.apiKey+"&units=metric&lang=de"
-        )
-            .then((response) => response.json())
-            .then(data => currentWeather = data)
-            .then(() => this.displayWeather(currentWeather))
-        
+    fetchJson: async url=> {
+        const response = await fetch('/getAllData');
+        return response.json();
     },
     
     /**
-     * Fetches historical weatherdata of the last 5 days from openweathermap
-     * 
+     * Fetches API data from server, splits it and calls displayDailyEvent if an event is in the JSON
      */
-    fetchHistoryWeather: function() {
-        var day5, day4, day3, day2, day1;
-        day5=new Date();
-        day4=new Date();
-        day3=new Date();
-        day2=new Date();
-        day1=new Date();
-
-        day5.setDate(day5.getDate()-5);
-        day5=(day5.getTime()/1000).toFixed(0);
-
-        day4.setDate(day4.getDate()-4);
-        day4=(day4.getTime()/1000).toFixed(0);
-
-        day3.setDate(day3.getDate()-3);
-        day3=(day3.getTime()/1000).toFixed(0);
-
-        day2.setDate(day2.getDate()-2);
-        day2=(day2.getTime()/1000).toFixed(0);
-
-        day1.setDate(day1.getDate()-1);
-        day1=(day1.getTime()/1000).toFixed(0);
-
-        Promise.all([
-            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day5+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
-            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day4+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
-            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day3+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
-            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day2+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
-            fetch("https://api.openweathermap.org/data/2.5/onecall/timemachine?lat="+lat+"&lon="+lon+"&dt="+day1+"&appid="+this.apiKey+"&units=metric&lang=de").then(value => value.json()),
-        ])
-        .then((value) => {
-            historyWeather = value;
-            console.log(historyWeather);
-        })
-        .catch(error => console.log(error));
+    getData: async function(){
+        const data = await weather.fetchJson(); 
+        console.log(data);
+        currentAir = data.air;
+        currentWeather = data.weather;
+        currentPollen = data.pollen;
+        currentRiver = data.river;
+        historyWeather = data.historicalWeather;
+        weather.displayWeather(data.weather);
+        pollen.displayPollen(data.pollen);
+        River.displayRiver(data.river);
+        weather.evaluateData(data.warnings);
+        if(data.events.content != null){
+            dailyEvents.displayDailyEvent(data.events);
+        }
     },
 
     /**
@@ -114,12 +61,12 @@ let weather = {
         weekday[11]="Do";
         weekday[12]="Fr";
         weekday[13]="Sa";
+
+        
         /**
          * Displays the detailed weather and air data at a certain time depending on displayTime in a range of right now to +48 Hours  
          */
         if(displayTime!=0){
-            console.log(data);
-            console.log(currentAir.list[0].main);
             var {icon, description} = data.hourly[displayTime].weather[0];
             var {dt, temp, humidity, wind_speed, uvi, feels_like} = data.hourly[displayTime];
             var airQuality = currentAir.list[displayTime].main.aqi;
@@ -127,13 +74,13 @@ let weather = {
             this.airQualityText(airQuality);
             milliseconds = dt * 1000
             var date = new Date(milliseconds);
-            var time=date.toLocaleString("de-DE", {timeZoneName: "short"})
+            var time=date.toLocaleString("de-DE", {timeZoneName: "short"});
             timeSplit= time.split(" ");
             document.querySelector(".date").innerText = "Am " + timeSplit[0];
             document.querySelector(".dt").innerText = "Um " + timeSplit[1] +" Uhr";
             document.querySelector(".temperaturNow").innerText ="Temperatur: " + temp.toFixed(1) + " °C";
-            document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like + " °C";
-            document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[date.getDay()].temp.night + "°C";
+            document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like.toFixed(1) + " °C";
+            document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[date.getDay()].temp.night.toFixed(1) + " °C";
             document.querySelector(".iconNow").src = "https://openweathermap.org/img/wn/" + icon +".png";
             document.querySelector(".description").innerText = description;
             document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
@@ -155,14 +102,27 @@ let weather = {
             var date = new Date(milliseconds);
             var time=date.toLocaleString("de-DE", {timeZoneName: "short"})
             timeSplit= time.split(" ");
+            var dateLive = new Date();
+            var LiveHours, LiveMinutes;
+            if(dateLive.getHours()<10){
+                LiveHours = "0"+dateLive.getHours();
+            }else{
+                LiveHours = dateLive.getHours();
+            }
+            if(dateLive.getMinutes()<10){
+                LiveMinutes = "0"+dateLive.getMinutes();
+            }else{
+                LiveMinutes = dateLive.getMinutes();
+            }
+
             document.querySelector(".date").innerText = "Am " + timeSplit[0];
-            document.querySelector(".dt").innerText = "Um " + timeSplit[1] +" Uhr";
+            document.querySelector(".dt").innerText = "Um " + LiveHours +":"+LiveMinutes +":00 Uhr";
             document.querySelector(".temperaturNow").innerText ="Temperatur: " + temp.toFixed(1) + " °C";
             document.querySelector(".feels_like").innerText = "Gefühlt: " + feels_like.toFixed(1) + " °C";
-            document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[0].temp.night.toFixed(1) + "°C";
+            document.querySelector(".Nachts").innerText = "Nachts: "+data.daily[0].temp.night.toFixed(1) + " °C";
             document.querySelector(".iconNow").src = "https://openweathermap.org/img/wn/" + icon +".png";
             document.querySelector(".description").innerText = description;
-            document.querySelector(".uvi").innerText = "UV Index: "+ uvi.toFixed(2);
+            document.querySelector(".uvi").innerText = "UV Index: "+ uvi;
             document.querySelector(".humidity").innerText = "Luftfeuchtigkeit: " + humidity + "%";
             if(wind_speedKMH<10){
                 document.querySelector(".wind").innerText = "Windgeschwindigkeit: "+wind_speedKMH.toFixed(1)+" Km/h\u00A0\u00A0";
@@ -183,7 +143,6 @@ let weather = {
             day.setDate(day.getDate()+1);
             var dateDay=day.toLocaleString("de-DE", {timeZoneName: "short"})
             datenb = dateDay.split(",");
-
             document.getElementById("dayWeather").innerText = weekday[day.getDay()] + ", der "+datenb[0];
             document.querySelector(".daysMorning").innerText ="Morgens:\n"+ data.daily[1].temp.morn.toFixed(1) + "°C";
             document.querySelector(".daysDay").innerText ="Tagsüber:\n" + data.daily[1].temp.day.toFixed(1) + "°C";
@@ -267,11 +226,12 @@ let weather = {
             document.querySelector(".day5Temp").innerText = historyWeather[4].hourly[13].temp.toFixed(1) + "C";
             document.querySelector(".day5TempNight").innerText = historyWeather[4].hourly[23].temp.toFixed(1) + "C";
             document.querySelector(".iconDay5").src = "https://openweathermap.org/img/wn/" + historyWeather[4].hourly[13].weather[0].icon +".png";
-        }    
-        //eventService.sendEvent(event_factory.adminMessageBroadcastEvent("weather"));
-        return(data);
+        } 
     },
 
+    /**
+     * Button functions
+     */
     previous: function() {
         if(displayTime>0){
             displayTime--;
@@ -334,233 +294,28 @@ let weather = {
         }
     },
     
-    evaluateData: function(){
-        var warnings = [];
-        var uv=0;
-        var wind=0;
-        var temp=0;
-        var air=0;
-        var pollen=0;
-        var river=0;
-        for(var i=0; i<11; i++){
-            //Temperatur
-            if(currentWeather.hourly[i].temp>=37){
-                //send event zu hoch
-                extremTemp=true;
-                temp=1;
-            }else{
-                if(currentWeather.hourly[i].temp>26){
-                    temp=5;
-                }
-                extremTemp=false;
-            }
-            if(currentWeather.hourly[i].temp<0){
-                if(currentWeather.hourly[i].temp<-5){
-                    if(currentWeather.hourly[i].temp<-10){
-                        //send event gefährlich tief
-                        extremTemp=true;
-                        temp=3;
-                    }else{
-                        //send event definitiv frost
-                        extremTemp=true;
-                        temp=2;
-                    }
-                    }else{
-                //send event vielleicht frost
-                temp=4;
-                }
-            }else{
-                extremTemp=false;
-            }
-
-            //Windgeschwindigkeit
-            if(currentWeather.hourly[i].wind_speed>17){
-                if(currentWeather.hourly[i].wind_speed>20.7){
-                    if(currentWeather.hourly[i].wind_speed>24.4){
-                        if(currentWeather.hourly[i].wind_speed>28.4){
-                            if(currentWeather.hourly[i].wind_speed>32.6){
-                                //event orkan(12)
-                                extremWind=true;
-                                wind=12;
-                            }else{
-                                //event orkanartiger Sturm(11)
-                                extremWind=true;
-                                wind=11;
-                            }
-                        }else{
-                            //event schwerer Sturm(10)
-                            extremWind=true;
-                            wind=10;
-                        }
-                    }else{
-                        //event Sturm(9)
-                        extremWind=true;
-                        wind=9;
-                    }
-                }else{
-                    //event stürmischer Wind(8)
-                    extremWind=true;
-                    wind=8;
-                }
-            }else if(currentWeather.hourly[i].wind_speed>13.9){
-                //event steifer Wind(7)
-                wind=7;
-            }
-            if(currentWeather.hourly[i].wind_speed<17){
-                extremWind=false;
-            }
-            
-            //Sonnenstrahlung
-            if(currentWeather.hourly[i].uvi>=3&&currentWeather.hourly[i].uvi<8){
-                extremUV=true;
-                uv=1;
-                //event sonnenstrahlung hoch
-            }else if(currentWeather.hourly[i].uvi>=8){
-                extremUV=true;
-                uv=2;
-                //event sonnenstrahlung extrem
-            }
-        }
-
-        //Luftqualität
-        for(var i=0; i<currentAir.list.length; i++){
-            switch(currentAir.list[i].main.aqi){
-                case 4:
-                    //send event schlecht
-                    air=1;
-                    break;
-                case 5:
-                    //send event sehr schlecht
-                    air=2;
-                    break;
-            }
-        }
-
-        //Pollen
-        if(currentPollen.pollen[0].today.severity==2){
-            //Use makeAirQualityEvent() to create an event
-            pollen=1;
-        }else{
-            if(currentPollen.pollen[0].today.severity>2){
-                //Use makeAirQualityEvent() to create a severe pollen
-                pollen=2;
-            }
-        }
-
-        //River
-        for(i=0;i<96;i++){
-            if(currentRiver[i].value>=350 && currentRiver[i].value<=435){
-                //create hochwasser event
-                river=1;
-            }else if(currentRiver[i].value>=435){
-                //create extremhochwasser event
-                river=2;
-                }
-        }
-        //Build warning
-        switch(temp)
-        {
-            case 1:
-                warnings.push("Temperatur extrem Hoch! Bitte lassen Sie keine Lebewesen oder hitzeempfindliche Gegenstände im Auto und bleiben Sie Hydriert.");
-                break;
-            case 2:
-                warnings.push("Sehr niedrige Temperaturen, Frost/Glätte und weitere gefahrungen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 3:
-                warnings.push("Niedrige Temperaturen, Frost/Glätte. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 4:
-                warnings.push("Temperaturen um 0°C. Es könnte zu Glätte/Frost kommen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 5:
-                warnings.push("Temperaturen von über 26°C. Bitte lassen Sie keine Lebewesen oder hitzeempfindliche Gegenstände im Auto und bleiben Sie Hydriert.")
-        }
-
-        switch(wind)
-        {
-            case 8:
-                warnings.push("Windstärke 8. Es könnten z.B. Äste von Bäumen abbrechen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 9:
-                warnings.push("Windstärke 9. Es könnte z.B. zu schäden an Häusern kommen. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 10:
-                warnings.push("Windstärke 10, schwerer Sturm. Es könnten z.B. Bäume entwurzeln. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 11:
-                warnings.push("Windstärke 11, Orkanartiger Sturm. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 12:
-                warnings.push("Windstärke 12, Orkan. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-        }
-        switch(uv)
-        {
-            case 1:
-                warnings.push("UV-Strahlung heute erhöht. Bitte benutzen Sie Sonnencreme.");
-                break;
-            case 2:
-                warnings.push("UV-Strahlung heute extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen, Sonnencreme reicht nicht aus!");
-                break;
-        }
-        switch(air)
-        {
-            case 1:
-                warnings.push("Luftqualität zeitweise schlecht.");
-                break;
-            case 2:
-                warnings.push("Luftqualität zeitweise sehr schlecht.");
-                break;
-        }
-        switch(pollen)
-        {
-            case 1:
-                warnings.push("Pollen sehr hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-            case 2:
-                warnings.push("Pollen extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
-                break;
-        }
-        switch(river)
-        {
-            case 1:
-                warnings.push("Der Wasserstand der Meser ist heute hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.");
-                break;
-            case 2:
-                warnings.push("Der Wasserstand der Meser ist heute extrem hoch, wenn Sie nah am Fluss leben Informieren Sie sich bitte über Sicherheitsmaßnahmen. Meiden Sie außerdem das Gebiet um den Fluss.");
-                break;
-        }
-        
+    /**
+     * Puts an array of warnings into the "Warnungen" div, if warnings are available
+     * @param {array} warnings The warnings from evaluation.js
+     */
+    evaluateData: function(warnings){
         if(warnings.length>0){
             document.querySelector(".warnungh2").innerText = "Warnungen:";
             document.querySelector(".warning").style.display = "block";
             document.querySelector(".WarnungText").innerHTML = "";
             for(var i=0;i<warnings.length;i++){
-                document.querySelector(".WarnungText").innerText += warnings[i]+"\n";
+                if(warnings[i]!=0){
+                    document.querySelector(".WarnungText").innerText += warnings[i]+"\n";
+                }
             }
         }else{
             document.querySelector(".WarnungText").innerHTML = "";
         }
-        console.log(warnings);
-        console.log(temp,uv,wind,air,pollen,river);
-
-        //Auswertung aktivitäten
     }
 
 }
 
 let pollen = {
-
-    /**
-     * fetches pollendata for Ostwestfalen
-     */
-    fetchPollen: function(){
-        fetch("https://api.achoo.dev/pollen/subregion/Ostwestfalen")
-    .then((response) => response.json())
-    .then(data => currentPollen = data)
-    .then((currentPollen) => this.displayPollen(currentPollen))
-    },
-
     /**
      * Fills the complete "Pollenflug in Cybercity" section with data
      * @param {JSON} data 
@@ -568,7 +323,6 @@ let pollen = {
     displayPollen: function(data){
         var Pollen = [];
         Pollen = data.pollen;
-        console.log(Pollen)
         if(pollenDay==0){
             document.querySelector(".Day").innerText="Heute";
             document.querySelector(".Ambrosia").innerText="Ambrosia: "+Pollen[0].today.description;
@@ -602,28 +356,15 @@ let pollen = {
         pollenDay=0;
         pollen.displayPollen(currentPollen)
     },
-
-    
 }
 
 let River = {
-
-    /**
-     * Fetches water level from pegelonline
-     */
-    fetchRiver: function(){
-        fetch("https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/VLOTHO/W/measurements.json?start=P15D")
-    .then((response) => response.json())
-    .then(data => currentRiver = data)
-    .then((currentRiver) => this.displayRiver(currentRiver))
-    },
 
     /**
      * Fills the complete "Wasserstand der Meser in CyberCity" section with data
      * @param {JSON} data 
      */
     displayRiver: function(data) {
-        console.log(data);
         var date=new Date();
         var lastDays=[3];
 
@@ -681,7 +422,23 @@ let River = {
         "Vor einer Woche: " +data[data.length-673].value + " cm  |  " +
         "Vor zwei Wochen: " + data[data.length-1345].value + " cm";
     }
+};
 
+/**
+ * Fills the complete "Aktivitäten in CyberCity" section with data. Only called when event is given by backend
+ */
+let dailyEvents = {
+    displayDailyEvent(event){
+        var start = new Date(event.content.time_start);
+        start=start.toLocaleString("de-DE", {timeZoneName: "short"});
+        startArr= start.split(" M");
+        var end = new Date(event.content.time_end);
+        end = end.toLocaleString("de-DE", {timeZoneName: "short"});
+        endArr = end.split(" M");
+        var eventText= "Heutige Veranstaltung: "+event.content.title+"\nVon: "+startArr[0]+"\n bis: "+endArr[0]+"\nAdresse: "+event.content.adress;
+        
+        document.querySelector(".aktivitiesText").innerText = eventText;
+    }
 };
 
 
@@ -718,14 +475,16 @@ document.getElementById("last5Days").addEventListener("click",function(){
 
 document.getElementById("next5Days").addEventListener("click",function(){
     weather.next5Days();
-    weather.evaluateData();
 });
-
-weather.fetchAir();
-weather.fetchWeather();
-weather.fetchHistoryWeather();
-pollen.fetchPollen();
-River.fetchRiver();
-
-//weather.evaluateData(evaluation.evaluateWeather(currentWeather),evaluation.evaluateAir(currentAir), evaluation.evaluateHistoryWeather(currentHistoryWeather), 
-//evaluation.evaluatePollen(currentPollen), evaluation.evaluateRiver(currentRiver));
+var timecheck;
+weather.getData();
+setInterval(()=>{
+    timecheck=new Date();
+    if(timecheck.getMinutes()==1){
+        console.log("Refreshing data");
+        //weather.getData();
+        document.location.reload(true);
+    }	
+    weather.displayWeather(currentWeather);
+    River.displayRiver(currentRiver);
+},60000);

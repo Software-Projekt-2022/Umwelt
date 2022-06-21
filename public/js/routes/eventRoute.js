@@ -5,7 +5,7 @@ const router = express.Router();
 const eventService = require('../events/eventService.js');
 const event_factory = require('../events/event_factory.js');
 
-router.post('/Umwelt', async (req, res) => {
+router.post('/Umwelt/testevent', async (req, res) => {
   try{
     await eventService.sendEvent(event_factory.adminMessageBroadcastEvent("Test from route"));
   }  
