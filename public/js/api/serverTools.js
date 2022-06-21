@@ -42,7 +42,7 @@ exports.startUp = async function(app) {
         }
     }
 
-    app.get('/getAllData', async(req, res) => {
+    app.get('/api/getAllData', async(req, res) => {
         res.send(allData)
     });
 }
@@ -76,7 +76,7 @@ exports.refreshData = async function(app) {
         }
     }
 
-    app.get('/getAllData', async(req, res) => {
+    app.get('/api/getAllData', async(req, res) => {
         res.send(allData)
     });
 }
