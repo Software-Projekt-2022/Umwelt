@@ -17,7 +17,7 @@ exports.evaluateWeather=async function(){
     var timeStampUV = [];
     var ct=0;
     //Temperatur
-    for(var i=0; i<5; i++){
+    for(var i=0; i<11; i++){
         if(currentWeather.hourly[i].temp>=37){
             timeStampTemp[ct]= i;
             ct++;
@@ -172,7 +172,7 @@ exports.evaluateAir = async function(){
     var air=0;
 
     //Air quality
-    for(var i=0; i<12; i++){
+    for(var i=0; i<11; i++){
         switch(currentAir.list[i].main.aqi){
             case 4:
                 eventService.sendEvent(event_factory.airQualityWarningEvent("Luftqualität schlecht", "airQuality", currentAir.list[i].components));
