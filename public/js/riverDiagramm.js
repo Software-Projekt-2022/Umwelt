@@ -1,3 +1,6 @@
+/***
+ * Silder to control number of days for river diagramm
+ */
 function riverSelect() {
     const slider = document.getElementById("riverSlider");
     const output = document.getElementById("output");
