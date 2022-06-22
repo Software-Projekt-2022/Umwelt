@@ -25,7 +25,6 @@ exports.evaluateWeather=async function(){
             temp=1;
         }else{
             if(currentWeather.hourly[i].temp>26){
-                eventService.sendEvent(event_factory.airQualityWarningEvent("Temperatur ist sehr hoch", "temperature", currentWeather.hourly[i].temp + "°C"));
                 timeStampTemp[ct]= i;
                 ct++;
                 temp=5;
@@ -151,11 +150,11 @@ exports.evaluateWeather=async function(){
         switch(uv)
         {
             case 1:
-                warnings.push("UV-Strahlung heute erhöht. Bitte benutzen Sie Sonnencreme.");
+                warnings.push("Die UV-Strahlung ist heute erhöht. Bitte benutzen Sie Sonnencreme.");
                 eventService.sendEvent(event_factory.airQualityWarningEvent("UV-Strahlung heute erhöht", "UV", currentWeather.hourly[timeStampUV[0]].uvi));
                 break;
             case 2:
-                warnings.push("UV-Strahlung heute extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen, Sonnencreme reicht nicht aus!");
+                warnings.push("Die UV-Strahlung heute extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen, Sonnencreme reicht nicht aus!");
                 eventService.sendEvent(event_factory.airQualityWarningEvent("UV-Strahlung heute extrem hoch", "UV", currentWeather.hourly[timeStampUV[0]].uvi));
                 break;
         }
@@ -170,8 +169,6 @@ exports.evaluateAir = async function(){
     const currentAir = fetching.getAirData();
     var warnings = [];
     var air=0;
-
-    //Air quality
     for(var i=0; i<11; i++){
         switch(currentAir.list[i].main.aqi){
             case 4:
@@ -187,10 +184,10 @@ exports.evaluateAir = async function(){
 
     switch(air){
         case 1:
-            warnings.push("Luftqualität zeitweise schlecht.");
+            warnings.push("Die Luftqualität ist aktuell schlecht.");
             break;
         case 2:
-            warnings.push("Luftqualität zeitweise sehr schlecht.");
+            warnings.push("Die Luftqualität ist aktuell sehr schlecht.");
             break;
     }
 
@@ -206,7 +203,6 @@ exports.evaluateRiver = async function(){
     var warnings = [];
     var river = 0;
     var river_ct = 0;
-    //River
     for(i=0;i<96;i++){
         if(currentRiver[i].value>=350 && currentRiver[i].value<=435){
             river_ct=i;
@@ -254,10 +250,10 @@ exports.evaluatePollen = async function(){
     switch(pollen)
         {
             case 1:
-                warnings.push("Pollen sehr hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                warnings.push("Der Pollenflug ist sehr hoch. Bitte beachten Sie entsprechende Maßnahmen.");
                 break;
             case 2:
-                warnings.push("Pollen extrem hoch. Bitte beachten Sie entsprechende Sicherheitsmaßnahmen.");
+                warnings.push("Der Pollenflug ist extrem hoch. Bitte beachten Sie entsprechende Maßnahmen.");
                 break;
         }
 

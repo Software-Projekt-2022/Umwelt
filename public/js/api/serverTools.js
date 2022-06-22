@@ -19,7 +19,7 @@ exports.startUp = async function(app) {
     riverData=await fetching.fetchRiver();
     pollenData=await fetching.fetchPollen();
     warnings = [];
-
+    if(checkData()){
         warnings.push(await evaluation.evaluateWeather(weatherData));
         warnings.push(await evaluation.evaluateAir(airData));
         warnings.push(await evaluation.evaluateRiver(riverData));
@@ -46,7 +46,7 @@ exports.startUp = async function(app) {
         app.get('/api/getAllData', async(req, res) => {
             res.send(allData)
         });
-    
+    }
 }
 
 /**
@@ -60,27 +60,29 @@ exports.refreshData = async function(app) {
     riverData=await fetching.fetchRiver();
     pollenData=await fetching.fetchPollen();
 
-    allData = {
-        "weather": weatherData,
-        "historicalWeather": histoData,
-        "air": airData,
-        "river": riverData,
-        "pollen": pollenData,
-        "warnings": warnings,
-        "events": {
-            content: {
-                "title": "Event 12",
-                "description": "Event 1 description",
-                "time_start": "2022-05-13T12:00:00.000Z",
-                "time_end": "2022-05-13T14:00:00.000Z",
-                "adress": "Event 1 adress",
+    if(checkData()){
+        allData = {
+            "weather": weatherData,
+            "historicalWeather": histoData,
+            "air": airData,
+            "river": riverData,
+            "pollen": pollenData,
+            "warnings": warnings,
+            "events": {
+                content: {
+                    "title": "Abgabe Softwareprojekt",
+                    "description": "Event 1 description",
+                    "time_start": "2022-06-28T12:30:00.000Z",
+                    "time_end": "2022-06-28T15:00:00.000Z",
+                    "address": "Artilleriestraße 9",
+                }
             }
         }
-    }
 
-    app.get('/api/getAllData', async(req, res) => {
-        res.send(allData)
-    });
+        app.get('/api/getAllData', async(req, res) => {
+            res.send(allData)
+        });
+    }
 }
 
 /**
@@ -88,19 +90,19 @@ exports.refreshData = async function(app) {
  * @returns true if the data is ok, false if not.
  */
 function checkData(){
-    if(this.weatherData.current == null){
+    if(weatherData.hourly==null || weatherData.hourly==undefined){
         return false;
     }
-    if(this.histoData[0].hourly[13].temp == null){
+    if(histoData[0].hourly == null){
         return false;
     }
-    if(this.airData.list[0].main.aqi == null){
+    if(airData.list==null){
         return false;
     }
-    if(this.riverData[0].value == null){
+    if(riverData[0]==null){
         return false;
     }
-    if(this.pollenData[0].today.description == null){
+    if(pollenData.pollen==null){
         return false;
     }
     return true;

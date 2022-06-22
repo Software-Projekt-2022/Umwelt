@@ -297,7 +297,6 @@ let weather = {
     evaluateData: function(warnings){
         if(warnings.length>0){
             document.querySelector(".warnungh2").innerText = "Warnungen:";
-            document.querySelector(".warning").style.display = "block";
             document.querySelector(".WarnungText").innerHTML = "";
             for(var i=0;i<warnings.length;i++){
                 if(warnings[i]!=0){
