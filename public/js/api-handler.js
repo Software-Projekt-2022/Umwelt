@@ -482,7 +482,6 @@ setInterval(()=>{
     timecheck=new Date();
     if(timecheck.getMinutes()==1){
         console.log("Refreshing data");
-        //weather.getData();
         document.location.reload(true);
     }	
     weather.displayWeather(currentWeather);
