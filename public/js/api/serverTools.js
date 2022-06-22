@@ -83,6 +83,10 @@ exports.refreshData = async function(app) {
     });
 }
 
+/**
+ * Checks if the fetched data contains the first thing thats used in api-handler.js.
+ * @returns true if the data is ok, false if not.
+ */
 function checkData(){
     pass = true;
     if(!this.weatherData.current){
