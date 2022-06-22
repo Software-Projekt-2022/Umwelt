@@ -19,6 +19,7 @@ exports.startUp = async function(app) {
     riverData=await fetching.fetchRiver();
     pollenData=await fetching.fetchPollen();
     warnings = [];
+
     if(checkData()){
         warnings.push(await evaluation.evaluateWeather(weatherData));
         warnings.push(await evaluation.evaluateAir(airData));
@@ -34,11 +35,11 @@ exports.startUp = async function(app) {
             "warnings": warnings,
             "events": {
                 "content": {
-                    "title": "Event 1",
+                    "title": "Abgabe Softwareprojekt",
                     "description": "Event 1 description",
-                    "time_start": "2022-05-13T12:00:00.000Z",
-                    "time_end": "2022-05-13T14:00:00.000Z",
-                    "address": "Event 1 address",
+                    "time_start": "2022-06-28T14:30:00.000Z",
+                    "time_end": "2022-06-28T17:00:00.000Z",
+                    "address": "Artilleriestraße 9",
                 },
             }
         }
