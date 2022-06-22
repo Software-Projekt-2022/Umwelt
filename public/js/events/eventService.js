@@ -82,6 +82,10 @@ function sendEvent(event)
     });
 }
 
+function onEventRecieved(event){
+    console.log('Event recieved %s: %s',event.event_type, JSON.stringify(event));
+}
+
 function recieveEvent(callback)
 {
     amqp_channel.prefetch(1);
@@ -89,6 +93,7 @@ function recieveEvent(callback)
     {
         if(msg.content)
         {
+            onEventRecieved(msg.content.toString());
             var event = JSON.parse(msg.content.toString());
             callback(event);
         }
@@ -98,7 +103,7 @@ function recieveEvent(callback)
 
 
 module.exports.sendEvent = sendEvent;
-
+module.exports.recieveEvent = recieveEvent;
 
 
     
