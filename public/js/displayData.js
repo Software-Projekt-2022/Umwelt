@@ -472,6 +472,10 @@ document.getElementById("last5Days").addEventListener("click",function(){
 document.getElementById("next5Days").addEventListener("click",function(){
     weather.next5Days();
 });
+
+/**
+ * Frontend routine to update data every hour
+ */
 var timecheck;
 weather.getData();
 setInterval(()=>{
