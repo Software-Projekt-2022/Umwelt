@@ -20,7 +20,6 @@ exports.startUp = async function(app) {
     pollenData=await fetching.fetchPollen();
     warnings = [];
 
-    if(checkData()){
         warnings.push(await evaluation.evaluateWeather(weatherData));
         warnings.push(await evaluation.evaluateAir(airData));
         warnings.push(await evaluation.evaluateRiver(riverData));
@@ -47,7 +46,7 @@ exports.startUp = async function(app) {
         app.get('/api/getAllData', async(req, res) => {
             res.send(allData)
         });
-    }
+    
 }
 
 /**
@@ -89,7 +88,6 @@ exports.refreshData = async function(app) {
  * @returns true if the data is ok, false if not.
  */
 function checkData(){
-    pass = true;
     if(!this.weatherData.current){
         return false;
     }
