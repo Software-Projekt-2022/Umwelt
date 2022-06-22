@@ -82,6 +82,21 @@ function sendEvent(event)
     });
 }
 
+function recieveEvent(callback)
+{
+    amqp_channel.prefetch(1);
+    amqp_channel.consume(microservice_queue, (msg) =>
+    {
+        if(msg.content)
+        {
+            var event = JSON.parse(msg.content.toString());
+            callback(event);
+        }
+    }
+    , {noAck: true});
+}
+
+
 module.exports.sendEvent = sendEvent;
 
 
