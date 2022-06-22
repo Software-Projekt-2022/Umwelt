@@ -18,6 +18,7 @@ exports.startUp = async function(app) {
     airData=await fetching.fetchAir();
     riverData=await fetching.fetchRiver();
     pollenData=await fetching.fetchPollen();
+    warnings = [];
     if(checkData()){
         warnings.push(await evaluation.evaluateWeather(weatherData));
         warnings.push(await evaluation.evaluateAir(airData));
