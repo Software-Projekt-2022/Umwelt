@@ -88,19 +88,19 @@ exports.refreshData = async function(app) {
  * @returns true if the data is ok, false if not.
  */
 function checkData(){
-    if(!this.weatherData.current){
+    if(this.weatherData.current == null){
         return false;
     }
-    if(!this.histoData[0].hourly[13].temp){
+    if(this.histoData[0].hourly[13].temp == null){
         return false;
     }
-    if(!this.airData.list[0].main.aqi){
+    if(this.airData.list[0].main.aqi == null){
         return false;
     }
-    if(!this.riverData[0].value){
+    if(this.riverData[0].value == null){
         return false;
     }
-    if(!this.pollenData[0].today.description){
+    if(this.pollenData[0].today.description == null){
         return false;
     }
     return true;

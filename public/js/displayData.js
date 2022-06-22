@@ -431,7 +431,7 @@ let dailyEvents = {
         var end = new Date(event.content.time_end);
         end = end.toLocaleString("de-DE", {timeZoneName: "short"});
         endArr = end.split(" M");
-        var eventText= "Heutige Veranstaltung: "+event.content.title+"\nVon: "+startArr[0]+"\n bis: "+endArr[0]+"\nAdresse: "+event.content.adress;
+        var eventText= "Heutige Veranstaltung: "+event.content.title+"\nVon: "+startArr[0]+"\n bis: "+endArr[0]+"\nAdresse: "+event.content.address;
         
         document.querySelector(".aktivitiesText").innerText = eventText;
     }
@@ -472,6 +472,10 @@ document.getElementById("last5Days").addEventListener("click",function(){
 document.getElementById("next5Days").addEventListener("click",function(){
     weather.next5Days();
 });
+
+/**
+ * Frontend routine to update data every hour
+ */
 var timecheck;
 weather.getData();
 setInterval(()=>{
