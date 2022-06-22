@@ -317,6 +317,7 @@ div.riverDiagramm{
         margin: 0%;
         margin-right: 5%;
         width: 50%;
+        white-space: initial;
     }
     div.bottom {
         float: right;
