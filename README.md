@@ -1,3 +1,3 @@
 # Wetter-Infrastruktur
 
-https://umwelt.cyber-city.systems/
+https://software-projekt-2022.github.io/Dokumentation/#/umwelt/index
