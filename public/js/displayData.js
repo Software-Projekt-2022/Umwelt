@@ -295,7 +295,8 @@ let weather = {
      * @param {array} warnings The warnings from evaluation.js
      */
     evaluateData: function(warnings){
-        if(warnings.length>0){
+        if(warnings.length[0]!=null){
+            document.getElementById('warningDIV').style.visibility="visible";
             document.querySelector(".warnungh2").innerText = "Warnungen:";
             document.querySelector(".WarnungText").innerHTML = "";
             for(var i=0;i<warnings.length;i++){
@@ -304,12 +305,10 @@ let weather = {
                 }
             }
         }else{
-            document.querySelector(".WarnungText").innerHTML = "";
+            document.getElementById('warningDIV').style.visibility = "hidden";
         }
     }
-
 }
-
 let pollen = {
     /**
      * Fills the complete "Pollenflug in Cybercity" section with data
