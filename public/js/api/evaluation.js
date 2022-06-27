@@ -16,7 +16,6 @@ exports.evaluateWeather=async function(){
     var timeStampWind = [];
     var timeStampUV = [];
     var ct=0;
-    //Temperatur
     for(var i=0; i<11; i++){
         if(currentWeather.hourly[i].temp>=37){
             timeStampTemp[ct]= i;
