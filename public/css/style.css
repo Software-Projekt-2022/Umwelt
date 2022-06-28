@@ -16,11 +16,6 @@ h2 {
     font: url("fonts/oswald-regular.ttf");
 }
 
-div.logo {
-    width: 100px;
-    height: auto;
-}
-
 #link{
     color: #102542;
     text-decoration: none;
